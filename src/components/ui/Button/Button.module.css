@@ -1,0 +1,55 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  padding: 0.5rem 1rem;
+  pointer-events: auto;
+  cursor: pointer;
+  border: 1px solid var(--input-border-color);
+
+  svg {
+    margin-right: 0.25rem;
+  }
+}
+
+.button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.buttonPrimary {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.buttonPrimary:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.buttonSecondary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.buttonSecondary:hover {
+  background-color: #3e3e3e;
+}
+
+.buttonBorderless {
+  border: none;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.buttonBorderless:hover {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}

@@ -1,0 +1,114 @@
+:root {
+  --border: #e5e7eb;
+  --input-border-color: #ccc;
+  --background: #fff;
+  --foreground: #000;
+  --accent: #f0f0f0;
+  --accent-foreground: #333;
+  --ring-color: #3b82f6;
+  --ring-offset-color: #fff;
+  --primary: #18181b;
+  --primary-foreground: #ffffff;
+}
+
+html,
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.main {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.section {
+  border-bottom: 1px var(--border) solid;
+  padding-bottom: 1rem;
+}
+
+.errorMessage {
+  color: #e0002b;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  background-color: var(--card);
+  color: var(--card-foreground);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.flexForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.flexBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.flexArea {
+  display: flex;
+  align-items: center;
+}
+
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 16px;
+  background-color: #f4f4f5;
+  color: #333;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.tag button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .formGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .flexForm {
+    flex-direction: row;
+  }
+}
