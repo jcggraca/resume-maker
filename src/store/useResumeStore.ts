@@ -12,6 +12,7 @@ export interface PersonalInfo {
   jobTitle: string
   summary: string
 }
+
 export interface WorkPoint {
   id: string
   order: number

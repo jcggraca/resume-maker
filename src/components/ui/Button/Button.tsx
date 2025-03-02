@@ -4,9 +4,10 @@ import styles from './Button.module.css'
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
   variant?: 'primary' | 'secondary' | 'borderless'
+  onlyIcon?: boolean
 }
 
-const Button: FC<ButtonProps> = ({ children, variant = 'primary', ...props }) => {
+const Button: FC<ButtonProps> = ({ children, variant = 'primary', onlyIcon, ...props }) => {
   return (
     <button
       type={props.type || 'button'}
@@ -15,6 +16,7 @@ const Button: FC<ButtonProps> = ({ children, variant = 'primary', ...props }) =>
         ${variant === 'primary' ? styles.buttonPrimary : ''}
         ${variant === 'secondary' ? styles.buttonSecondary : ''}
         ${variant === 'borderless' ? styles.buttonBorderless : ''}
+        ${onlyIcon ? styles.buttonIcon : ''}
       `}
       {...props}
     >

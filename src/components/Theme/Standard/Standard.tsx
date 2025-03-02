@@ -60,15 +60,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 12,
   },
+  itemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   date: {
-    position: 'absolute',
-    right: 0,
     fontSize: 10,
   },
   location: {
-    position: 'absolute',
-    right: 0,
-    top: 15,
     fontSize: 10,
   },
   skills: {
@@ -142,16 +141,21 @@ function Resume() {
             <Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
             {works.map(experience => (
               <View key={experience.id} style={styles.item}>
-                <Text style={styles.itemTitle}>{experience.company}</Text>
-                <Text style={styles.date}>
-                  {experience.startDate}
-                  {' '}
-                  -
-                  {' '}
-                  {experience.currentlyWorking ? 'Present' : experience.endDate}
-                </Text>
-                <Text style={{ marginBottom: 5 }}>{experience.role}</Text>
-                <Text style={styles.location}>{experience.location}</Text>
+                <View style={styles.itemHeader}>
+                  <Text style={styles.itemTitle}>{experience.company}</Text>
+                  <Text style={styles.date}>
+                    {experience.startDate}
+                    {' '}
+                    -
+                    {' '}
+                    {experience.currentlyWorking ? 'Present' : experience.endDate}
+                  </Text>
+                </View>
+                <View style={styles.itemHeader}>
+                  <Text style={{ marginBottom: 5 }}>{experience.role}</Text>
+                  <Text style={styles.location}>{experience.location}</Text>
+                </View>
+
                 <List>
                   {experience.points.map(point => (
                     <Item key={point.id}>{point.description}</Item>
@@ -202,8 +206,11 @@ function Resume() {
 
             {education.map(item => (
               <View key={item.id} style={styles.item}>
-                <Text style={styles.itemTitle}>{item.institution}</Text>
-                <Text style={styles.date}>{item.date}</Text>
+                <View style={styles.itemHeader}>
+                  <Text style={styles.itemTitle}>{item.institution}</Text>
+                  <Text style={styles.date}>{item.date}</Text>
+                </View>
+
                 <Text>{item.degree}</Text>
               </View>
             ))}
@@ -215,16 +222,18 @@ function Resume() {
             <Text style={styles.sectionTitle}>CERTIFICATIONS</Text>
 
             {certifications.map(item => (
-              <View key={item.id}>
+              <View key={item.id} style={styles.itemHeader}>
                 <View style={styles.itemCertification}>
                   <Text style={{ fontWeight: 'bold' }}>
                     {item.name}
                   </Text>
-                  <Text>
-                    ,
-                    {' '}
-                    {item.description}
-                  </Text>
+                  {item.description && (
+                    <Text>
+                      ,
+                      {' '}
+                      {item.description}
+                    </Text>
+                  )}
                 </View>
                 <Text style={styles.date}>{item.date}</Text>
               </View>

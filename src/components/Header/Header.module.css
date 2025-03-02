@@ -1,0 +1,47 @@
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--background);
+  z-index: 1000;
+}
+
+.title {
+  margin: 0 0 0 1rem;
+  padding: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.rightSide {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.dark {
+  color: yellow;
+}
+
+.light {
+  color: black;
+}
+
+.button:hover {
+  opacity: 0.8;
+}

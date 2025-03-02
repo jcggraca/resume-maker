@@ -1,0 +1,36 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  position: fixed;
+  top: 3rem;
+  left: 1rem;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+}
+
+.link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+.isActive,
+.link:focus-visible,
+.link:hover {
+  color: var(--link-color);
+  font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+  .root {
+    display: none;
+  }
+}

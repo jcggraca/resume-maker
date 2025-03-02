@@ -1,0 +1,9 @@
+.root {
+  scroll-margin-top: 3.5rem;
+}
+
+.group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}

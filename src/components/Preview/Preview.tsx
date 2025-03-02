@@ -1,11 +1,14 @@
 import { pdf, PDFViewer } from '@react-pdf/renderer'
 import { useState } from 'react'
+import { useIntl } from 'react-intl'
 // import Minimal from '../Theme/Minimal/Minimal'
 // import Luke from '../Theme/Luke/Luke'
 import Standard from '../Theme/Standard/Standard'
 import Button from '../ui/Button/Button'
+import styles from './Preview.module.css'
 
 export default function Preview() {
+  const intl = useIntl()
   const [displayResume, setDisplayResume] = useState(false)
 
   const handleDownload = async () => {
@@ -23,19 +26,29 @@ export default function Preview() {
   }
 
   return (
-    <div id="preview">
+    <section id="preview" className={styles.root}>
       {displayResume
         ? (
             <div>
-              <Button onClick={() => setDisplayResume(false)}>Hide Resume</Button>
-              <Button variant="secondary" onClick={handleDownload}>Download as PDF</Button>
+              <div className={styles.group}>
+                <Button onClick={() => setDisplayResume(false)}>
+                  {intl.formatMessage({ id: 'hideResume' })}
+                </Button>
+                <Button variant="secondary" onClick={handleDownload}>
+                  {intl.formatMessage({ id: 'downloadPDF' })}
+                </Button>
+              </div>
 
               <PDFViewer width="100%" height="1000px">
                 <Standard />
               </PDFViewer>
             </div>
           )
-        : <Button onClick={() => setDisplayResume(true)}>Preview Resume</Button>}
-    </div>
+        : (
+            <Button onClick={() => setDisplayResume(true)}>
+              {intl.formatMessage({ id: 'previewResume' })}
+            </Button>
+          )}
+    </section>
   )
 }

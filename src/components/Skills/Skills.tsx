@@ -1,15 +1,18 @@
-import { ArrowDown, ArrowUp, CirclePlus, Trash2 } from 'lucide-react'
+import { CirclePlus, Trash2 } from 'lucide-react'
 import { useResumeStore } from '../../store/useResumeStore'
+import OrderButtons from '../OrderButtons/OrderButtons'
 import Button from '../ui/Button/Button'
 import Input from '../ui/Input/Input'
 import TextArea from '../ui/TextArea/TextArea'
+import { useIntl } from 'react-intl'
 
 export default function Skills() {
+  const intl = useIntl()
   const { skills, addSkill, updateSkill, removeSkill } = useResumeStore()
 
   return (
     <section id="skills" className="section">
-      <h2>Skills</h2>
+      <h2>{intl.formatMessage({ id: 'skills' })}</h2>
 
       {skills
         .sort((a, b) => a.order - b.order)
@@ -17,9 +20,13 @@ export default function Skills() {
           <div className="card" key={skill.id}>
             <div>
               <Input
-                label="Skill Category"
-                name="skill-category"
-                placeholder="Skill Category"
+                label={`
+                  ${intl.formatMessage({ id: 'skill' })}
+                  ${" "}
+                  ${intl.formatMessage({ id: 'category' })}  
+                `}
+                name={`skill-category-${skill.id}`}
+                placeholder="Front End"
                 value={skill.name}
                 onChange={e => updateSkill({ id: skill.id, name: e.target.value })}
                 style={{
@@ -27,8 +34,12 @@ export default function Skills() {
                 }}
               />
               <TextArea
-                label="Skill Description"
-                name="skill-description"
+                label={`
+                  ${intl.formatMessage({ id: 'skill' })}
+                  ${" "}
+                  ${intl.formatMessage({ id: 'description' })}  
+                `}
+                name={`skill-description-${skill.id}`}
                 placeholder="Javascript, Typescript, React, Teamwork, ..."
                 value={skill.description}
                 onChange={e => updateSkill({ id: skill.id, description: e.target.value })}
@@ -37,24 +48,15 @@ export default function Skills() {
 
             <div className="flexBetween">
               <div>
-                <Button
-                  variant="borderless"
-                  disabled={skill.order === 0}
-                  onClick={() => updateSkill({ id: skill.id, order: skill.order - 1 })}
-                >
-                  <ArrowUp size={16} />
-                </Button>
-                <Button
-                  variant="borderless"
-                  disabled={skill.order === skills.length - 1}
-                  onClick={() => updateSkill({ id: skill.id, order: skill.order + 1 })}
-                >
-                  <ArrowDown size={16} />
-                </Button>
+                <OrderButtons
+                  item={skill}
+                  list={skills}
+                  onClick={updateSkill}
+                />
               </div>
               <Button variant="borderless" onClick={() => removeSkill(skill.id)}>
                 <Trash2 size={16} />
-                Delete Skill Category
+                {intl.formatMessage({ id: 'delete' })} {intl.formatMessage({ id: 'skill' })}
               </Button>
             </div>
           </div>
@@ -62,7 +64,7 @@ export default function Skills() {
 
       <Button onClick={addSkill}>
         <CirclePlus size={16} />
-        Add Skill
+        {intl.formatMessage({ id: 'add' })} {intl.formatMessage({ id: 'skill' })}
       </Button>
     </section>
   )

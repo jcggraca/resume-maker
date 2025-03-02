@@ -1,14 +1,17 @@
-import { ArrowDown, ArrowUp, CirclePlus, Trash2 } from 'lucide-react'
+import { CirclePlus, Trash2 } from 'lucide-react'
+import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
+import OrderButtons from '../OrderButtons/OrderButtons'
 import Button from '../ui/Button/Button'
 import Input from '../ui/Input/Input'
 
 export default function Certifications() {
+  const intl = useIntl()
   const { certifications, addCertifications, updateCertifications, removeCertifications } = useResumeStore()
 
   return (
     <section id="certifications">
-      <h2>Certifications</h2>
+      <h2>{intl.formatMessage({ id: 'certifications' })}</h2>
 
       {certifications
         .sort((a, b) => a.order - b.order)
@@ -16,23 +19,43 @@ export default function Certifications() {
           <div className="card" key={certification.id}>
             <div className="formGrid">
               <Input
-                label="Certification Name"
-                name="certification"
-                placeholder="Certification Name"
+                label={`
+                  ${intl.formatMessage({ id: 'certification' })}
+                  ${" "}
+                  ${intl.formatMessage({ id: 'name' })}  
+                `}
+                name={`certification-name-${certification.id}`}
+                placeholder={`
+                  ${intl.formatMessage({ id: 'certification' })}
+                  ${" "}
+                  ${intl.formatMessage({ id: 'name' })}  
+                `}
                 value={certification.name}
                 onChange={e => updateCertifications({ id: certification.id, name: e.target.value })}
               />
               <Input
-                label="Certification Description"
-                name="certification-description"
-                placeholder="Certification Description"
+                label={`
+                  ${intl.formatMessage({ id: 'certification' })}
+                  ${" "}
+                  ${intl.formatMessage({ id: 'description' })}  
+                `}
+                name={`certification-description-${certification.id}`}
+                placeholder={`
+                  ${intl.formatMessage({ id: 'certification' })}
+                  ${" "}
+                  ${intl.formatMessage({ id: 'description' })}  
+                `}
                 value={certification.description}
                 onChange={e => updateCertifications({ id: certification.id, description: e.target.value })}
               />
               <Input
-                label="Certification Date"
-                name="certification-date"
-                placeholder="2014 - 2016"
+                label={`
+                  ${intl.formatMessage({ id: 'certification' })}
+                  ${" "}
+                  ${intl.formatMessage({ id: 'date' })}  
+                `}
+                name={`certification-date-${certification.id}`}
+                placeholder="2016"
                 value={certification.date}
                 onChange={e => updateCertifications({ id: certification.id, date: e.target.value })}
               />
@@ -40,24 +63,15 @@ export default function Certifications() {
 
             <div className="flexBetween">
               <div>
-                <Button
-                  variant="borderless"
-                  disabled={certification.order === 0}
-                  onClick={() => updateCertifications({ id: certification.id, order: certification.order - 1 })}
-                >
-                  <ArrowUp size={16} />
-                </Button>
-                <Button
-                  variant="borderless"
-                  disabled={certification.order === certifications.length - 1}
-                  onClick={() => updateCertifications({ id: certification.id, order: certification.order + 1 })}
-                >
-                  <ArrowDown size={16} />
-                </Button>
+                <OrderButtons
+                  item={certification}
+                  list={certifications}
+                  onClick={updateCertifications}
+                />
               </div>
               <Button variant="borderless" onClick={() => removeCertifications(certification.id)}>
                 <Trash2 size={16} />
-                Delete Certification
+                {intl.formatMessage({ id: 'delete' })} {intl.formatMessage({ id: 'certification' })}
               </Button>
             </div>
           </div>
@@ -65,7 +79,7 @@ export default function Certifications() {
 
       <Button onClick={addCertifications}>
         <CirclePlus size={16} />
-        Add Certification
+        {intl.formatMessage({ id: 'add' })} {intl.formatMessage({ id: 'certification' })}
       </Button>
     </section>
   )

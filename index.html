@@ -2,11 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <meta name="description" content="Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume." />
+    <meta name="keywords" content="resume maker, create resume, resume builder, CV builder, professional resume, resume templates, free resume builder" />
+    <meta name="author" content="João Graça" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Resume Maker - Create Your Professional Resume Today!" />
+    <meta property="og:description" content="Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume." />
+    <meta property="og:image" content="/screenshot.png" />
+    <meta property="og:url" content="https://resumemaker.joaograca.dev/" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Resume Maker - Create Your Professional Resume Today!" />
+    <meta name="twitter:description" content="Create a professional resume quickly and easily with our Resume Maker app." />
+    <meta name="twitter:image" content="/screenshot.png" />
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Resume Maker</title>
+
+    <!-- Structured Data for Resume Maker -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Resume Maker",
+        "description": "Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume.",
+        "url": "https://resumemaker.joaograca.dev/",
+        "image": "/screenshot.png",
+        "applicationCategory": "Productivity",
+        "operatingSystem": "All Platforms",
+        "softwareVersion": "1.0",
+        "creator": {
+          "@type": "Organization",
+          "name": "João Graça",
+          "url": "https://joaograca.dev"
+        }
+      }
+    </script>
+    
   </head>
-  <body>
+  <body data-theme="light">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

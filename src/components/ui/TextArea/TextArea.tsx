@@ -5,13 +5,14 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   name: string
   label?: string
   error?: string
+  hideLabel?: boolean
 }
 
-const TextArea: FC<TextAreaProps> = ({ name, label, value, onChange, error, ...rest }) => {
+const TextArea: FC<TextAreaProps> = ({ name, label, value, onChange, error, hideLabel, ...rest }) => {
   return (
     <div className={styles.root}>
       {label && (
-        <label htmlFor={name} className={styles.label}>
+        <label htmlFor={name} className={hideLabel ? 'sr-only' : styles.label}>
           {label}
         </label>
       )}

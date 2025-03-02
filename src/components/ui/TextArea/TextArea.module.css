@@ -9,6 +9,7 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 1.25rem;
+  text-transform: capitalize;
 }
 
 .textArea {
@@ -19,6 +20,5 @@
 }
 
 .textArea:focus {
-  border-color: #d4e0ff;
   outline: none;
 }

@@ -1,14 +1,17 @@
-import { ArrowDown, ArrowUp, CirclePlus, Trash2 } from 'lucide-react'
+import { CirclePlus, Trash2 } from 'lucide-react'
 import { useResumeStore } from '../../store/useResumeStore'
+import OrderButtons from '../OrderButtons/OrderButtons'
 import Button from '../ui/Button/Button'
 import Input from '../ui/Input/Input'
+import { useIntl } from 'react-intl'
 
 export default function Education() {
+  const intl = useIntl()
   const { education, addEducation, updateEducation, removeEducation } = useResumeStore()
 
   return (
     <section id="education" className="section">
-      <h2>Education</h2>
+      <h2>{intl.formatMessage({ id: 'education' })}</h2>
 
       {education.map(item => (
         <div className="card" key={item.id}>
@@ -16,46 +19,41 @@ export default function Education() {
             <Input
               onChange={e => updateEducation({ id: item.id, institution: e.target.value })}
               value={item.institution}
-              name="institution"
-              label="Institution Name"
-              placeholder="Institution Name"
+              name={`institution-name-${item.id}`}
+              label={`
+                ${intl.formatMessage({ id: 'institution' })}
+                ${" "}
+                ${intl.formatMessage({ id: 'name' })}  
+              `}
+              placeholder="Maastricht University"
             />
             <Input
               onChange={e => updateEducation({ id: item.id, degree: e.target.value })}
               value={item.degree}
-              name="degree"
-              label="Degree"
-              placeholder="Degree"
+              name={`education-degree-${item.id}`}
+              label={intl.formatMessage({ id: 'degree' })}
+              placeholder="Computer Science"
             />
             <Input
               onChange={e => updateEducation({ id: item.id, date: e.target.value })}
               value={item.date}
-              name="endDate"
-              label="Date"
-              placeholder="Date"
+              name={`education-endDate-${item.id}`}
+              label={intl.formatMessage({ id: 'date' })}
+              placeholder="2016"
             />
           </div>
 
           <div className="flexBetween">
             <div>
-              <Button
-                variant="borderless"
-                disabled={item.order === 0}
-                onClick={() => updateEducation({ id: item.id, order: item.order - 1 })}
-              >
-                <ArrowUp size={16} />
-              </Button>
-              <Button
-                variant="borderless"
-                disabled={item.order === education.length - 1}
-                onClick={() => updateEducation({ id: item.id, order: item.order + 1 })}
-              >
-                <ArrowDown size={16} />
-              </Button>
+              <OrderButtons
+                item={item}
+                list={education}
+                onClick={updateEducation}
+              />
             </div>
             <Button variant="borderless" onClick={() => removeEducation(item.id)}>
               <Trash2 size={16} />
-              Remove Education
+              {intl.formatMessage({ id: 'delete' })} {intl.formatMessage({ id: 'education' })}
             </Button>
           </div>
         </div>
@@ -63,7 +61,7 @@ export default function Education() {
 
       <Button onClick={addEducation}>
         <CirclePlus size={16} />
-        Add Education
+        {intl.formatMessage({ id: 'add' })} {intl.formatMessage({ id: 'education' })}
       </Button>
     </section>
   )
