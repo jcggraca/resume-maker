@@ -8,8 +8,8 @@ interface Link {
 }
 
 const links: Link[] = [
-  { url: '#tips', label: 'tips' },
   { url: '#preview', label: 'preview' },
+  { url: '#customization', label: 'customization' },
   { url: '#personal', label: 'personalInfo' },
   { url: '#work', label: 'workExperience' },
   { url: '#education', label: 'education' },

@@ -2,7 +2,6 @@ import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import Input from '../ui/Input/Input'
 import TextArea from '../ui/TextArea/TextArea'
-import { Check, TriangleAlert, X } from 'lucide-react'
 
 export default function PersonalInfo() {
   const intl = useIntl()
@@ -10,7 +9,7 @@ export default function PersonalInfo() {
 
   return (
     <section id="personal" className="section">
-      <h2>{intl.formatMessage({ id: 'certifications' })}</h2>
+      <h2>{intl.formatMessage({ id: 'personalInfo' })}</h2>
 
       <div className="formGrid">
         <Input
@@ -25,7 +24,7 @@ export default function PersonalInfo() {
           value={personalInfo.email}
           onChange={e => setPersonalInfo({ email: e.target.value })}
           name="email"
-          label={`${intl.formatMessage({ id: 'email' })} ${intl.formatMessage({ id: 'emailHint' })}`}
+          label={intl.formatMessage({ id: 'email' })}
           type="email"
           placeholder="mail@mail.com"
         />
@@ -43,7 +42,7 @@ export default function PersonalInfo() {
           value={personalInfo.phone}
           onChange={e => setPersonalInfo({ phone: e.target.value })}
           name="phone"
-          label={`${intl.formatMessage({ id: 'phone' })} ${intl.formatMessage({ id: 'phoneHint' })}`}
+          label={intl.formatMessage({ id: 'phone' })}
           type="tel"
           placeholder="+351 919191919"
         />
@@ -70,7 +69,7 @@ export default function PersonalInfo() {
           value={personalInfo.website}
           onChange={e => setPersonalInfo({ website: e.target.value })}
           name="website"
-          label={`${intl.formatMessage({ id: 'personalWebsite' })} ${intl.formatMessage({ id: 'websiteHint' })}`}
+          label={intl.formatMessage({ id: 'personalWebsite' })}
           type="text"
           placeholder="https://john.dev/"
         />
@@ -83,24 +82,9 @@ export default function PersonalInfo() {
           type="text"
           placeholder="Software Engineer"
         />
-
-        <strong><TriangleAlert color="#ffdd4d" /> {intl.formatMessage({ id: 'checkLinks' })}</strong>
       </div>
 
       <h2>{intl.formatMessage({ id: 'summary' })}</h2>
-
-      <article className='card'>
-        <h3><Check color="#4ae081" /> {intl.formatMessage({ id: 'dos' })}</h3>
-        <h4>{intl.formatMessage({ id: 'summarizeBackground' })}</h4>
-        <p>{intl.formatMessage({ id: 'summarizeBackgroundMessage' })}</p>
-
-        <h4>{intl.formatMessage({ id: 'tailorRole' })}</h4>
-        <p>{intl.formatMessage({ id: 'tailorRoleMessage' })}</p>
-
-        <h3><X color="#f04d4d" /> {intl.formatMessage({ id: 'dont' })}</h3>
-        <h4>{intl.formatMessage({ id: 'dontSpecialize' })}</h4>
-        <p>{intl.formatMessage({ id: 'dontSpecializeMessage' })}</p>
-      </article>
 
       <TextArea
         value={personalInfo.summary}

@@ -7,12 +7,15 @@ import {
   View,
 } from '@react-pdf/renderer'
 import { useResumeStore } from '../../../store/useResumeStore'
+import { useSettingsStore } from '../../../store/useSettingsStore'
 import { cleanUrl } from '../../../utils/form'
+
+const font = useSettingsStore.getState().font
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Helvetica',
+    fontFamily: font,
     fontSize: 10,
   },
   header: {
@@ -28,23 +31,25 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#000',
     paddingBottom: 5,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   contactItem: {
-    marginRight: 10,
+    marginRight: 5,
   },
   link: {
     color: '#0000EE',
-    textDecoration: 'none',
+    marginRight: 5,
   },
   sectionTitle: {
     fontSize: 12,
     fontWeight: 'bold',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
     marginTop: 10,
     marginBottom: 5,
   },
   skillsSection: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   skillCategory: {
     fontWeight: 'bold',
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   experienceItem: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   experienceHeader: {
     flexDirection: 'row',
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   certifications: {
-    marginTop: 10,
+    marginTop: 5,
   },
   certificationItem: {
     flexDirection: 'row',
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   projectItem: {
-    marginBottom: 10,
+    marginBottom: 2,
   },
   projectHeader: {
     flexDirection: 'row',
@@ -104,24 +109,43 @@ const styles = StyleSheet.create({
 })
 
 function ResumePDF() {
-  const { personalInfo, skills, works, certifications } = useResumeStore()
+  const { personalInfo, certifications, works, skills, languages, education } = useResumeStore()
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.name}>{personalInfo.name}</Text>
-          <View style={styles.contactInfo}>
-            <Text style={styles.contactItem}>{personalInfo.jobTitle}</Text>
-            <Text style={styles.contactItem}>|</Text>
-            <Link href={`mailto:${personalInfo.linkedin}`} style={styles.link}>{cleanUrl(personalInfo.email)}</Link>
-            <Text style={styles.contactItem}>|</Text>
-            <Link href={personalInfo.website} style={styles.link}>{cleanUrl(personalInfo.website)}</Link>
-            <Text style={styles.contactItem}>|</Text>
-            <Link href={personalInfo.github} style={styles.link}>{cleanUrl(personalInfo.github)}</Link>
-            <Text style={styles.contactItem}>|</Text>
-            <Link href={personalInfo.linkedin} style={styles.link}>{cleanUrl(personalInfo.linkedin)}</Link>
-          </View>
+          <Text style={styles.contactInfo}>
+            {personalInfo.location
+              ? <Text style={styles.contactItem}>{personalInfo.location}</Text>
+              : <Text style={{ display: 'none' }}>{}</Text>}
+
+            {personalInfo.location && (personalInfo.email || personalInfo.website || personalInfo.github || personalInfo.linkedin) ? ' | ' : ''}
+
+            {personalInfo.email
+              ? <Link href={`mailto:${personalInfo.email}`} style={styles.link}>{cleanUrl(personalInfo.email)}</Link>
+              : <Link style={{ display: 'none' }} href="#">{}</Link>}
+
+            {personalInfo.email && (personalInfo.github || personalInfo.website || personalInfo.linkedin) ? ' | ' : ''}
+
+            {personalInfo.website
+              ? <Link href={personalInfo.website} style={styles.link}>{cleanUrl(personalInfo.website)}</Link>
+              : <Link style={{ display: 'none' }} href="#">{}</Link>}
+
+            {personalInfo.website && (personalInfo.github || personalInfo.linkedin) ? ' | ' : ''}
+
+            {personalInfo.github
+              ? <Link href={personalInfo.github} style={styles.link}>{cleanUrl(personalInfo.github)}</Link>
+              : <Link style={{ display: 'none' }} href="#">{}</Link>}
+
+            {personalInfo.github && personalInfo.linkedin ? ' | ' : ''}
+
+            {personalInfo.linkedin
+              ? <Link href={personalInfo.linkedin} style={styles.link}>{cleanUrl(personalInfo.linkedin)}</Link>
+              : <Link style={{ display: 'none' }} href="#">{}</Link>}
+          </Text>
+
           <Text>{personalInfo.summary}</Text>
         </View>
 
@@ -170,6 +194,31 @@ function ResumePDF() {
         </View>
 
         <View style={styles.certifications}>
+          <Text style={styles.sectionTitle}>Languages</Text>
+          {languages.map(language => (
+            <View key={language.id} style={styles.certificationItem}>
+              <Text>
+                {language.name}
+                {language.level && ` - ${language.level}`}
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.certifications}>
+          <Text style={styles.sectionTitle}>Education</Text>
+          {education.map(item => (
+            <View key={item.id}>
+              <View style={styles.certificationItem}>
+                <Text>{item.institution}</Text>
+                <Text style={styles.dateRange}>{item.date}</Text>
+              </View>
+              <Text>{item.degree}</Text>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.certifications}>
           <Text style={styles.sectionTitle}>Certifications</Text>
           {certifications.map(certification => (
             <View key={certification.id} style={styles.certificationItem}>
@@ -182,35 +231,6 @@ function ResumePDF() {
               <Text style={styles.dateRange}>{certification.date}</Text>
             </View>
           ))}
-
-        </View>
-
-        {/* Projects */}
-        <View style={styles.certifications}>
-          <Text style={styles.sectionTitle}>Projects</Text>
-
-          {/* Project 1 */}
-          <View style={styles.projectItem}>
-            <View style={styles.projectHeader}>
-              <Text style={styles.projectName}>Nvim-docker</Text>
-              <Link src="https://github.com/dgrbrady/nvim-docker" style={styles.projectLink}>github.com/dgrbrady/nvim-docker</Link>
-            </View>
-            <View style={styles.bulletPoint}>
-              <Text style={styles.bullet}>•</Text>
-              <Text style={styles.bulletText}>Neovim plugin for Docker image and container management, written in Lua, 100+ stars on GitHub</Text>
-            </View>
-          </View>
-
-          {/* Project 2 */}
-          <View style={styles.projectItem}>
-            <View style={styles.projectHeader}>
-              <Text style={styles.projectName}>Crossroads</Text>
-            </View>
-            <View style={styles.bulletPoint}>
-              <Text style={styles.bullet}>•</Text>
-              <Text style={styles.bulletText}>A cutting-edge, local-first, real-time collaborative platform using SvelteKit. Features an extensible plugin system, interactive map rendering, customizable avatars, offline support and seamless data synchronization across WebSocket, IndexedDB, and PocketBase infrastructure</Text>
-            </View>
-          </View>
         </View>
       </Page>
     </Document>

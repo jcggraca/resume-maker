@@ -1,12 +1,12 @@
 import { ArrowDown, ArrowUp, CirclePlus, Trash2 } from 'lucide-react'
+import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
 import Button from '../ui/Button/Button'
+import CheckBox from '../ui/CheckBox/CheckBox'
 import Input from '../ui/Input/Input'
 import TextArea from '../ui/TextArea/TextArea'
 import styles from './WorkExperience.module.css'
-import { useIntl } from 'react-intl'
-import CheckBox from '../ui/CheckBox/CheckBox'
 
 export default function WorkExperience() {
   const intl = useIntl()
@@ -24,7 +24,7 @@ export default function WorkExperience() {
               name={`company-${work.id}`}
               label={`
                 ${intl.formatMessage({ id: 'company' })}
-                ${" "}
+                ${' '}
                 ${intl.formatMessage({ id: 'name' })}  
               `}
               placeholder="Google"
@@ -76,7 +76,7 @@ export default function WorkExperience() {
             .map(point => (
               <div className={`flexArea ${styles.point}`} key={point.id}>
                 <TextArea
-                  label={intl.formatMessage({ id: 'workExperiencePoint' })}  
+                  label={intl.formatMessage({ id: 'workExperiencePoint' })}
                   hideLabel
                   name={`work-point-description-${point.id}`}
                   value={point.description}
@@ -103,7 +103,7 @@ export default function WorkExperience() {
                 <Button
                   aria-label={`
                     ${intl.formatMessage({ id: 'delete' })}
-                    ${" "}
+                    ${' '}
                     ${intl.formatMessage({ id: 'workExperiencePoint' })}  
                   `}
                   variant="borderless"
@@ -116,7 +116,9 @@ export default function WorkExperience() {
             ))}
 
           <Button onClick={() => addWorkPoint(work.id)}>
-            {intl.formatMessage({ id: 'delete' })} {intl.formatMessage({ id: 'bulletPoints' })}
+            {intl.formatMessage({ id: 'add' })}
+            {' '}
+            {intl.formatMessage({ id: 'bulletPoints' })}
           </Button>
 
           <div className="flexBetween">
@@ -129,7 +131,9 @@ export default function WorkExperience() {
             </div>
             <Button variant="borderless" onClick={() => removeWork(work.id)}>
               <Trash2 size={16} />
-              {intl.formatMessage({ id: 'delete' })} {intl.formatMessage({ id: 'work' })}
+              {intl.formatMessage({ id: 'delete' })}
+              {' '}
+              {intl.formatMessage({ id: 'work' })}
             </Button>
           </div>
         </div>
@@ -137,7 +141,9 @@ export default function WorkExperience() {
 
       <Button onClick={addWork}>
         <CirclePlus size={16} />
-        {intl.formatMessage({ id: 'add' })} {intl.formatMessage({ id: 'work' })}
+        {intl.formatMessage({ id: 'add' })}
+        {' '}
+        {intl.formatMessage({ id: 'work' })}
       </Button>
     </section>
   )

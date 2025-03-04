@@ -3,25 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume." />
-    <meta name="keywords" content="resume maker, create resume, resume builder, CV builder, professional resume, resume templates, free resume builder" />
+    <meta
+      name="description"
+      content="Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume."
+    />
+    <meta
+      name="keywords"
+      content="resume maker, create resume, resume builder, CV builder, professional resume, resume templates, free resume builder"
+    />
     <meta name="author" content="João Graça" />
     <meta name="robots" content="index, follow" />
-    
+
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Resume Maker - Create Your Professional Resume Today!" />
-    <meta property="og:description" content="Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume." />
-    <meta property="og:image" content="/screenshot.png" />
+    <meta
+      property="og:description"
+      content="Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume."
+    />
+    <meta property="og:image" content="/og.png" />
     <meta property="og:url" content="https://resumemaker.joaograca.dev/" />
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Resume Maker - Create Your Professional Resume Today!" />
-    <meta name="twitter:description" content="Create a professional resume quickly and easily with our Resume Maker app." />
-    <meta name="twitter:image" content="/screenshot.png" />
-    
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta
+      name="twitter:description"
+      content="Create a professional resume quickly and easily with our Resume Maker app."
+    />
+    <meta name="twitter:image" content="/og.png" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <title>Resume Maker</title>
 
     <!-- Structured Data for Resume Maker -->
@@ -32,7 +46,7 @@
         "name": "Resume Maker",
         "description": "Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume.",
         "url": "https://resumemaker.joaograca.dev/",
-        "image": "/screenshot.png",
+        "image": "/og.png",
         "applicationCategory": "Productivity",
         "operatingSystem": "All Platforms",
         "softwareVersion": "1.0",
@@ -43,10 +57,10 @@
         }
       }
     </script>
-    
   </head>
   <body data-theme="light">
     <div id="root"></div>
+    <div id="modal-root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

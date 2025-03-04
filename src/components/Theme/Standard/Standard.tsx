@@ -1,20 +1,15 @@
-import { Document, Font, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
+import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 import { useResumeStore } from '../../../store/useResumeStore'
+import { useSettingsStore } from '../../../store/useSettingsStore'
 import { cleanUrl } from '../../../utils/form'
 import List, { Item } from './List'
 
-Font.register({
-  family: 'Roboto',
-  fonts: [
-    { src: '/fonts/Roboto-Regular.ttf' },
-    { src: '/fonts/Roboto-Bold.ttf', fontWeight: 'bold' },
-  ],
-})
+const font = useSettingsStore.getState().font
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Roboto',
+    fontFamily: font,
     fontSize: 11,
   },
   header: {
@@ -190,10 +185,7 @@ function Resume() {
               <View key={language.id}>
                 <Text>
                   {language.name}
-                  {' '}
-                  -
-                  {' '}
-                  {language.level}
+                  {language.level && ` - ${language.level}`}
                 </Text>
               </View>
             ))}

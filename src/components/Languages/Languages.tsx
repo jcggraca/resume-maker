@@ -1,9 +1,9 @@
 import { CirclePlus, Trash2 } from 'lucide-react'
+import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
 import Button from '../ui/Button/Button'
 import Input from '../ui/Input/Input'
-import { useIntl } from 'react-intl'
 
 export default function Languages() {
   const intl = useIntl()
@@ -21,18 +21,18 @@ export default function Languages() {
               <Input
                 label={`
                   ${intl.formatMessage({ id: 'language' })}
-                  ${" "}
+                  ${' '}
                   ${intl.formatMessage({ id: 'name' })}  
                 `}
                 name={`language-name-${language.id}`}
-                placeholder={intl.formatMessage({ id: 'portuguese' })} 
+                placeholder={intl.formatMessage({ id: 'portuguese' })}
                 value={language.name}
                 onChange={e => updateLanguage({ id: language.id, name: e.target.value })}
               />
               <Input
                 label={`
                   ${intl.formatMessage({ id: 'language' })}
-                  ${" "}
+                  ${' '}
                   ${intl.formatMessage({ id: 'level' })}
                 `}
                 name={`language-description-${language.id}`}
@@ -52,7 +52,9 @@ export default function Languages() {
               </div>
               <Button variant="borderless" onClick={() => removeLanguage(language.id)}>
                 <Trash2 size={16} />
-                {intl.formatMessage({ id: 'delete' })} {intl.formatMessage({ id: 'language' })}
+                {intl.formatMessage({ id: 'delete' })}
+                {' '}
+                {intl.formatMessage({ id: 'language' })}
               </Button>
             </div>
           </div>
@@ -60,7 +62,9 @@ export default function Languages() {
 
       <Button onClick={addLanguage}>
         <CirclePlus size={16} />
-        {intl.formatMessage({ id: 'add' })} {intl.formatMessage({ id: 'language' })}
+        {intl.formatMessage({ id: 'add' })}
+        {' '}
+        {intl.formatMessage({ id: 'language' })}
       </Button>
     </section>
   )

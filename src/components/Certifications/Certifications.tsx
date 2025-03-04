@@ -10,7 +10,7 @@ export default function Certifications() {
   const { certifications, addCertifications, updateCertifications, removeCertifications } = useResumeStore()
 
   return (
-    <section id="certifications">
+    <section className="section" id="certifications">
       <h2>{intl.formatMessage({ id: 'certifications' })}</h2>
 
       {certifications
@@ -19,41 +19,21 @@ export default function Certifications() {
           <div className="card" key={certification.id}>
             <div className="formGrid">
               <Input
-                label={`
-                  ${intl.formatMessage({ id: 'certification' })}
-                  ${" "}
-                  ${intl.formatMessage({ id: 'name' })}  
-                `}
+                label={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'name' })}`}
                 name={`certification-name-${certification.id}`}
-                placeholder={`
-                  ${intl.formatMessage({ id: 'certification' })}
-                  ${" "}
-                  ${intl.formatMessage({ id: 'name' })}  
-                `}
+                placeholder={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'name' })}`}
                 value={certification.name}
                 onChange={e => updateCertifications({ id: certification.id, name: e.target.value })}
               />
               <Input
-                label={`
-                  ${intl.formatMessage({ id: 'certification' })}
-                  ${" "}
-                  ${intl.formatMessage({ id: 'description' })}  
-                `}
+                label={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'description' })}`}
                 name={`certification-description-${certification.id}`}
-                placeholder={`
-                  ${intl.formatMessage({ id: 'certification' })}
-                  ${" "}
-                  ${intl.formatMessage({ id: 'description' })}  
-                `}
+                placeholder={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'description' })}`}
                 value={certification.description}
                 onChange={e => updateCertifications({ id: certification.id, description: e.target.value })}
               />
               <Input
-                label={`
-                  ${intl.formatMessage({ id: 'certification' })}
-                  ${" "}
-                  ${intl.formatMessage({ id: 'date' })}  
-                `}
+                label={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'date' })}`}
                 name={`certification-date-${certification.id}`}
                 placeholder="2016"
                 value={certification.date}
@@ -71,7 +51,9 @@ export default function Certifications() {
               </div>
               <Button variant="borderless" onClick={() => removeCertifications(certification.id)}>
                 <Trash2 size={16} />
-                {intl.formatMessage({ id: 'delete' })} {intl.formatMessage({ id: 'certification' })}
+                {intl.formatMessage({ id: 'delete' })}
+                {' '}
+                {intl.formatMessage({ id: 'certification' })}
               </Button>
             </div>
           </div>
@@ -79,7 +61,9 @@ export default function Certifications() {
 
       <Button onClick={addCertifications}>
         <CirclePlus size={16} />
-        {intl.formatMessage({ id: 'add' })} {intl.formatMessage({ id: 'certification' })}
+        {intl.formatMessage({ id: 'add' })}
+        {' '}
+        {intl.formatMessage({ id: 'certification' })}
       </Button>
     </section>
   )
