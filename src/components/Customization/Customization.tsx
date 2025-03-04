@@ -40,7 +40,7 @@ export default function Customization() {
   ]
 
   return (
-    <section id="customization">
+    <section className="section" id="customization">
       <h2>Customization</h2>
 
       <div className="card">

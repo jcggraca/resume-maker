@@ -17,6 +17,7 @@
   border: 1px solid var(--border-color);
   font-size: 16px;
   transition: border-color 0.3s ease-in-out;
+  text-transform: capitalize;
 }
 
 .input:disabled {

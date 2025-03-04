@@ -10,7 +10,7 @@ export default function Certifications() {
   const { certifications, addCertifications, updateCertifications, removeCertifications } = useResumeStore()
 
   return (
-    <section className="section" id="certifications">
+    <section id="certifications">
       <h2>{intl.formatMessage({ id: 'certifications' })}</h2>
 
       {certifications
@@ -19,21 +19,21 @@ export default function Certifications() {
           <div className="card" key={certification.id}>
             <div className="formGrid">
               <Input
-                label={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'name' })}`}
+                label={intl.formatMessage({ id: 'name' })}
                 name={`certification-name-${certification.id}`}
-                placeholder={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'name' })}`}
+                placeholder={intl.formatMessage({ id: 'name' })}
                 value={certification.name}
                 onChange={e => updateCertifications({ id: certification.id, name: e.target.value })}
               />
               <Input
-                label={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'description' })}`}
+                label={intl.formatMessage({ id: 'description' })}
                 name={`certification-description-${certification.id}`}
-                placeholder={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'description' })}`}
+                placeholder={intl.formatMessage({ id: 'description' })}
                 value={certification.description}
                 onChange={e => updateCertifications({ id: certification.id, description: e.target.value })}
               />
               <Input
-                label={`${intl.formatMessage({ id: 'certification' })} ${intl.formatMessage({ id: 'date' })}`}
+                label={intl.formatMessage({ id: 'date' })}
                 name={`certification-date-${certification.id}`}
                 placeholder="2016"
                 value={certification.date}

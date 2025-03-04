@@ -22,11 +22,7 @@ export default function WorkExperience() {
             <Input
               onChange={e => updateWork({ id: work.id, company: e.target.value })}
               name={`company-${work.id}`}
-              label={`
-                ${intl.formatMessage({ id: 'company' })}
-                ${' '}
-                ${intl.formatMessage({ id: 'name' })}  
-              `}
+              label={intl.formatMessage({ id: 'companyName' })}
               placeholder="Google"
               value={work.company}
             />

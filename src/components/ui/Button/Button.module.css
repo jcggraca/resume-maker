@@ -13,6 +13,7 @@
   pointer-events: auto;
   cursor: pointer;
   border: 1px solid var(--border-color);
+  text-transform: capitalize;
 
   svg {
     margin-right: 0.25rem;

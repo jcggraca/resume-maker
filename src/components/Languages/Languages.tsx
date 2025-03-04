@@ -19,22 +19,14 @@ export default function Languages() {
           <div className="card" key={language.id}>
             <div className="flexForm">
               <Input
-                label={`
-                  ${intl.formatMessage({ id: 'language' })}
-                  ${' '}
-                  ${intl.formatMessage({ id: 'name' })}  
-                `}
+                label={intl.formatMessage({ id: 'name' })}
                 name={`language-name-${language.id}`}
                 placeholder={intl.formatMessage({ id: 'portuguese' })}
                 value={language.name}
                 onChange={e => updateLanguage({ id: language.id, name: e.target.value })}
               />
               <Input
-                label={`
-                  ${intl.formatMessage({ id: 'language' })}
-                  ${' '}
-                  ${intl.formatMessage({ id: 'level' })}
-                `}
+                label={intl.formatMessage({ id: 'level' })}
                 name={`language-description-${language.id}`}
                 placeholder="B1"
                 value={language.level}

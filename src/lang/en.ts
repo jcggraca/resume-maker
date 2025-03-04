@@ -50,4 +50,5 @@ export const messages = {
   linkedin: 'LinkedIn',
   github: 'Github',
   customization: 'customization',
+  companyName: 'company name',
 }
