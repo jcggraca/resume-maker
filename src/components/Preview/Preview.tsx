@@ -65,6 +65,12 @@ export default function Preview() {
     })
   }, [])
 
+  useEffect(() => {
+    // !Fix update PDF after when the user remove a array item
+    if (!displayResume)
+      window.location.reload()
+  }, [displayResume])
+
   const handleDownload = async () => {
     const renderTemplate = () => {
       switch (template) {

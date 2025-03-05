@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import type { Certification, Education, Language, Skill, Work, WorkPoint } from '../../store/useResumeStore'
 import { ArrowDown, ArrowUp } from 'lucide-react'
-import Button from '../ui/Button/Button'
 import { useIntl } from 'react-intl'
+import Button from '../ui/Button/Button'
 
 interface OrderButtonsProps {
   list: WorkPoint[] | Work[] | Skill[] | Language[] | Education[] | Certification[]

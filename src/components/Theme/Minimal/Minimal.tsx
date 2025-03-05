@@ -8,7 +8,6 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer'
-import { useResumeStore } from '../../../store/useResumeStore'
 import { useSettingsStore } from '../../../store/useSettingsStore'
 import { cleanUrl } from '../../../utils/form'
 
