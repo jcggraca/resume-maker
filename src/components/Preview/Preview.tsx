@@ -1,6 +1,8 @@
 import { Font, pdf, PDFViewer } from '@react-pdf/renderer'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useIntl } from 'react-intl'
+import ErrorBoundary from '../../ErrorBoundary'
+import { useResumeStore } from '../../store/useResumeStore'
 import { useSettingsStore } from '../../store/useSettingsStore'
 import Modal from '../Modal/Modal'
 import Minimal from '../Theme/Minimal/Minimal'
@@ -11,8 +13,46 @@ import styles from './Preview.module.css'
 export default function Preview() {
   const intl = useIntl()
   const { template } = useSettingsStore()
+  const { personalInfo, certifications, works, skills, languages, education, lastUpdated } = useResumeStore()
   const [displayResume, setDisplayResume] = useState(false)
-  const [key, setKey] = useState(0)
+
+  const memoizedTemplate = useMemo(() => {
+    switch (template) {
+      case 'Standard':
+        return (
+          <Standard
+            personalInfo={personalInfo}
+            certifications={certifications}
+            works={works}
+            skills={skills}
+            languages={languages}
+            education={education}
+          />
+        )
+      case 'Minimal':
+        return (
+          <Minimal
+            personalInfo={personalInfo}
+            certifications={certifications}
+            works={works}
+            skills={skills}
+            languages={languages}
+            education={education}
+          />
+        )
+      default:
+        return (
+          <Standard
+            personalInfo={personalInfo}
+            certifications={certifications}
+            works={works}
+            skills={skills}
+            languages={languages}
+            education={education}
+          />
+        )
+    }
+  }, [displayResume])
 
   useEffect(() => {
     Font.register({
@@ -26,7 +66,45 @@ export default function Preview() {
   }, [])
 
   const handleDownload = async () => {
-    const blob = await pdf(<Standard />).toBlob()
+    const renderTemplate = () => {
+      switch (template) {
+        case 'Standard':
+          return (
+            <Standard
+              personalInfo={personalInfo}
+              certifications={certifications}
+              works={works}
+              skills={skills}
+              languages={languages}
+              education={education}
+            />
+          )
+        case 'Minimal':
+          return (
+            <Minimal
+              personalInfo={personalInfo}
+              certifications={certifications}
+              works={works}
+              skills={skills}
+              languages={languages}
+              education={education}
+            />
+          )
+        default:
+          return (
+            <Standard
+              personalInfo={personalInfo}
+              certifications={certifications}
+              works={works}
+              skills={skills}
+              languages={languages}
+              education={education}
+            />
+          )
+      }
+    }
+
+    const blob = await pdf(renderTemplate()).toBlob()
     const url = URL.createObjectURL(blob)
 
     const link = document.createElement('a')
@@ -39,46 +117,32 @@ export default function Preview() {
     URL.revokeObjectURL(url)
   }
 
-  const renderTemplate = () => {
-    switch (template) {
-      case 'Standard':
-        return <Standard />
-      case 'Minimal':
-        return <Minimal />
-      default:
-        return <Standard />
-    }
-  }
-
-  const openPreview = () => {
-    setDisplayResume(true)
-    setKey(prevKey => prevKey + 1)
-  }
-
   return (
-    <section id="preview" className={styles.root}>
-      <Button onClick={openPreview}>
-        {intl.formatMessage({ id: 'previewResume' })}
-      </Button>
+    <ErrorBoundary>
+      <section id="preview" className={styles.root}>
+        <Button onClick={() => setDisplayResume(true)}>
+          {intl.formatMessage({ id: 'previewResume' })}
+        </Button>
 
-      <Modal
-        key={key}
-        isOpen={displayResume}
-        onClose={() => setDisplayResume(false)}
-      >
-        <div className={styles.group}>
-          <Button onClick={() => setDisplayResume(false)}>
-            {intl.formatMessage({ id: 'hideResume' })}
-          </Button>
-          <Button variant="secondary" onClick={handleDownload}>
-            {intl.formatMessage({ id: 'downloadPDF' })}
-          </Button>
-        </div>
+        <Modal
+          isOpen={displayResume}
+          onClose={() => setDisplayResume(false)}
+          key={lastUpdated}
+        >
+          <div className={styles.group}>
+            <Button onClick={() => setDisplayResume(false)}>
+              {intl.formatMessage({ id: 'hideResume' })}
+            </Button>
+            <Button variant="secondary" onClick={handleDownload}>
+              {intl.formatMessage({ id: 'downloadPDF' })}
+            </Button>
+          </div>
 
-        <PDFViewer key={key} width="100%" height="90%">
-          {renderTemplate()}
-        </PDFViewer>
-      </Modal>
-    </section>
+          <PDFViewer width="100%" height="90%">
+            {memoizedTemplate}
+          </PDFViewer>
+        </Modal>
+      </section>
+    </ErrorBoundary>
   )
 }

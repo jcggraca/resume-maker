@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+import type { Certification, Education, Language, PersonalInfo, Skill, Work } from '../../../store/useResumeStore'
 import {
   Document,
   Link,
@@ -108,9 +110,16 @@ const styles = StyleSheet.create({
   },
 })
 
-function ResumePDF() {
-  const { personalInfo, certifications, works, skills, languages, education } = useResumeStore()
+interface MinimalProps {
+  personalInfo: PersonalInfo
+  certifications: Certification[]
+  works: Work[]
+  skills: Skill[]
+  languages: Language[]
+  education: Education[]
+}
 
+const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills, languages, education }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -237,4 +246,4 @@ function ResumePDF() {
   )
 }
 
-export default ResumePDF
+export default Minimal

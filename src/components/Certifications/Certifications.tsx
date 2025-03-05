@@ -13,6 +13,12 @@ export default function Certifications() {
     <section id="certifications">
       <h2>{intl.formatMessage({ id: 'certifications' })}</h2>
 
+      {/* <Pencil /> */}
+      <Input
+        label="Change Block Name"
+        name="certification-edit"
+      />
+
       {certifications
         .sort((a, b) => a.order - b.order)
         .map(certification => (

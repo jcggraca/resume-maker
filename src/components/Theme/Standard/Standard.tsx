@@ -1,5 +1,6 @@
+import type { FC } from 'react'
+import type { Certification, Education, Language, PersonalInfo, Skill, Work } from '../../../store/useResumeStore'
 import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
-import { useResumeStore } from '../../../store/useResumeStore'
 import { useSettingsStore } from '../../../store/useSettingsStore'
 import { cleanUrl } from '../../../utils/form'
 import List, { Item } from './List'
@@ -71,9 +72,16 @@ const styles = StyleSheet.create({
   },
 })
 
-function Resume() {
-  const { personalInfo, certifications, works, skills, languages, education } = useResumeStore()
+interface StandardProps {
+  personalInfo: PersonalInfo
+  certifications: Certification[]
+  works: Work[]
+  skills: Skill[]
+  languages: Language[]
+  education: Education[]
+}
 
+const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skills, languages, education }) => {
   return (
     <Document>
       <Page style={styles.page}>
@@ -81,46 +89,23 @@ function Resume() {
           <Text style={styles.name}>{personalInfo.name}</Text>
           <Text style={styles.title}>{personalInfo.jobTitle}</Text>
           <Text style={styles.contact}>
-            {personalInfo.email
-              ? <Link href={`mailto:${personalInfo.email}`}>{personalInfo.email}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
-
+            {personalInfo.email && <Link href={`mailto:${personalInfo.email}`}>{personalInfo.email}</Link>}
             {personalInfo.email && (personalInfo.website || personalInfo.github || personalInfo.linkedin) ? ' | ' : ''}
 
-            {personalInfo.website
-              ? <Link href={personalInfo.website || '#'}>{cleanUrl(personalInfo.website || '')}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
-
+            {personalInfo.website && <Link href={personalInfo.website || '#'}>{cleanUrl(personalInfo.website || '')}</Link>}
             {personalInfo.website && (personalInfo.github || personalInfo.linkedin) ? ' | ' : ''}
 
-            {personalInfo.github
-              ? <Link href={personalInfo.github}>{cleanUrl(personalInfo.github)}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
-
+            {personalInfo.github && <Link href={personalInfo.github}>{cleanUrl(personalInfo.github)}</Link>}
             {personalInfo.github && personalInfo.linkedin ? ' | ' : ''}
 
-            {personalInfo.linkedin
-              ? <Link href={personalInfo.linkedin}>{cleanUrl(personalInfo.linkedin)}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
+            {personalInfo.linkedin && <Link href={personalInfo.linkedin}>{cleanUrl(personalInfo.linkedin)}</Link>}
           </Text>
           <Text style={styles.contact}>
-            {personalInfo.phone
-              ? (
-                  <Text>
-                    {cleanUrl(personalInfo.phone)}
-                  </Text>
-                )
-              : <Text style={{ display: 'none' }}></Text>}
+            {personalInfo.phone && <Text>{personalInfo.phone}</Text>}
 
             {personalInfo.phone && personalInfo.location ? ' | ' : ''}
 
-            {personalInfo.location
-              ? (
-                  <Text>
-                    {cleanUrl(personalInfo.location)}
-                  </Text>
-                )
-              : <Text style={{ display: 'none' }}></Text>}
+            {personalInfo.location && <Text>{personalInfo.location}</Text>}
           </Text>
         </View>
 
@@ -237,4 +222,4 @@ function Resume() {
   )
 }
 
-export default Resume
+export default Standard

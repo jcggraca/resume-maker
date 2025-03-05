@@ -12,6 +12,8 @@
   --secondary-button: #18181b;
   --secondary-button-hover: #3e3e3e;
 
+  --outline: #000000;
+
   --card: #ffffff;
   --card-foreground: #333333;
 }
@@ -29,6 +31,8 @@
   --primary-button-hover: #3e3e3e;
   --secondary-button: #f0f0f0;
   --secondary-button-hover: #e0e0e0;
+
+  --outline: #ffffff;
 
   --card: #374151;
   --card-foreground: #e5e7eb;

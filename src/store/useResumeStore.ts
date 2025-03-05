@@ -68,6 +68,7 @@ interface ResumeState {
   education: Education[]
   works: Work[]
   certifications: Certification[]
+  lastUpdated: string
   setPersonalInfo: (data: Partial<PersonalInfo>) => void
   addSkill: () => void
   updateSkill: (data: Partial<Skill>) => void
@@ -89,6 +90,8 @@ interface ResumeState {
   removeCertifications: (id: string) => void
 }
 
+const getTime = new Date().getTime().toString()
+
 export const useResumeStore = create(
   persist<ResumeState>(
     set => ({
@@ -108,8 +111,10 @@ export const useResumeStore = create(
       education: [],
       works: [],
       certifications: [],
-      setPersonalInfo: data => set(state => ({ personalInfo: { ...state.personalInfo, ...data } })),
+      lastUpdated: getTime,
+      setPersonalInfo: data => set(state => ({ personalInfo: { ...state.personalInfo, ...data }, lastUpdated: getTime })),
       addSkill: () => set(state => ({
+        lastUpdated: getTime,
         skills: [
           ...state.skills,
           {
@@ -123,6 +128,7 @@ export const useResumeStore = create(
         ],
       })),
       updateSkill: data => set(state => ({
+        lastUpdated: getTime,
         skills: state.skills.map((item) => {
           if (item.id === data.id) {
             if (data.order !== undefined) {
@@ -141,6 +147,7 @@ export const useResumeStore = create(
         })),
       })),
       removeSkill: id => set(state => ({
+        lastUpdated: getTime,
         skills: state.skills
           .filter(skill => skill.id !== id)
           .map((skill, index) => ({
@@ -149,6 +156,7 @@ export const useResumeStore = create(
           })),
       })),
       addLanguage: () => set(state => ({
+        lastUpdated: getTime,
         languages: [
           ...state.languages,
           {
@@ -162,6 +170,7 @@ export const useResumeStore = create(
         ],
       })),
       updateLanguage: data => set(state => ({
+        lastUpdated: getTime,
         languages: state.languages.map((item) => {
           if (item.id === data.id) {
             if (data.order !== undefined) {
@@ -180,6 +189,7 @@ export const useResumeStore = create(
         })),
       })),
       removeLanguage: id => set(state => ({
+        lastUpdated: getTime,
         languages: state.languages
           .filter(language => language.id !== id)
           .map((language, index) => ({
@@ -188,6 +198,7 @@ export const useResumeStore = create(
           })),
       })),
       addEducation: () => set(state => ({
+        lastUpdated: getTime,
         education: [
           ...state.education,
           {
@@ -202,6 +213,7 @@ export const useResumeStore = create(
         ],
       })),
       updateEducation: data => set(state => ({
+        lastUpdated: getTime,
         education: state.education.map((item) => {
           if (item.id === data.id) {
             if (data.order !== undefined) {
@@ -220,6 +232,7 @@ export const useResumeStore = create(
         })),
       })),
       removeEducation: id => set(state => ({
+        lastUpdated: getTime,
         education: state.education
           .filter(item => item.id !== id)
           .map((item, index) => ({
@@ -228,6 +241,7 @@ export const useResumeStore = create(
           })),
       })),
       addWork: () => set(state => ({
+        lastUpdated: getTime,
         works: [
           ...state.works,
           {
@@ -252,6 +266,7 @@ export const useResumeStore = create(
         ],
       })),
       updateWork: data => set(state => ({
+        lastUpdated: getTime,
         works: state.works.map((item) => {
           if (item.id === data.id) {
             if (data.order !== undefined) {
@@ -270,6 +285,7 @@ export const useResumeStore = create(
         })),
       })),
       removeWork: id => set(state => ({
+        lastUpdated: getTime,
         works: state.works
           .filter(item => item.id !== id)
           .map((item, index) => ({
@@ -278,6 +294,7 @@ export const useResumeStore = create(
           })),
       })),
       addWorkPoint: id => set(state => ({
+        lastUpdated: getTime,
         works: state.works.map(item => (item.id === id
           ? {
               ...item,
@@ -296,6 +313,7 @@ export const useResumeStore = create(
       })),
       updateWorkPoint: (workID, pointID, order, description) =>
         set(state => ({
+          lastUpdated: getTime,
           works: state.works.map((item) => {
             if (item.id === workID) {
               const points = [...item.points]
@@ -338,6 +356,7 @@ export const useResumeStore = create(
         })),
       removeWorkPoint: (workID, pointID) =>
         set(state => ({
+          lastUpdated: getTime,
           works: state.works.map(work =>
             work.id === workID
               ? {
@@ -353,6 +372,7 @@ export const useResumeStore = create(
           ),
         })),
       addCertifications: () => set(state => ({
+        lastUpdated: getTime,
         certifications: [
           ...state.certifications,
           {
@@ -367,6 +387,7 @@ export const useResumeStore = create(
         ],
       })),
       updateCertifications: data => set(state => ({
+        lastUpdated: getTime,
         certifications: state.certifications.map((item) => {
           if (item.id === data?.id) {
             if (data.order !== undefined) {
@@ -386,6 +407,7 @@ export const useResumeStore = create(
       })),
       removeCertifications: id =>
         set(state => ({
+          lastUpdated: getTime,
           certifications: state.certifications
             .filter(cert => cert.id !== id)
             .map((cert, index) => ({
