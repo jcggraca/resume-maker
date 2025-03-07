@@ -102,7 +102,6 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
           </Text>
           <Text style={styles.contact}>
             {personalInfo.phone && <Text>{personalInfo.phone}</Text>}
-
             {personalInfo.phone && personalInfo.location ? ' | ' : ''}
 
             {personalInfo.location && <Text>{personalInfo.location}</Text>}

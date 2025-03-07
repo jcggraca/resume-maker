@@ -85,9 +85,9 @@ interface ResumeState {
   addWorkPoint: (id: string) => void
   updateWorkPoint: (workID: string, pointID: string, order?: number, description?: string) => void
   removeWorkPoint: (workID: string, pointID: string) => void
-  addCertifications: () => void
-  updateCertifications: (data: Partial<Certification>) => void
-  removeCertifications: (id: string) => void
+  addCertification: () => void
+  updateCertification: (data: Partial<Certification>) => void
+  removeCertification: (id: string) => void
 }
 
 const getTime = new Date().getTime().toString()
@@ -371,7 +371,7 @@ export const useResumeStore = create(
               : work,
           ),
         })),
-      addCertifications: () => set(state => ({
+      addCertification: () => set(state => ({
         lastUpdated: getTime,
         certifications: [
           ...state.certifications,
@@ -386,7 +386,7 @@ export const useResumeStore = create(
           },
         ],
       })),
-      updateCertifications: data => set(state => ({
+      updateCertification: data => set(state => ({
         lastUpdated: getTime,
         certifications: state.certifications.map((item) => {
           if (item.id === data?.id) {
@@ -405,7 +405,7 @@ export const useResumeStore = create(
           order: index,
         })),
       })),
-      removeCertifications: id =>
+      removeCertification: id =>
         set(state => ({
           lastUpdated: getTime,
           certifications: state.certifications

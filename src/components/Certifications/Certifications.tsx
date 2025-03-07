@@ -7,7 +7,7 @@ import Input from '../ui/Input/Input'
 
 export default function Certifications() {
   const intl = useIntl()
-  const { certifications, addCertifications, updateCertifications, removeCertifications } = useResumeStore()
+  const { certifications, addCertification, updateCertification, removeCertification } = useResumeStore()
 
   return (
     <section id="certifications">
@@ -29,21 +29,21 @@ export default function Certifications() {
                 name={`certification-name-${certification.id}`}
                 placeholder={intl.formatMessage({ id: 'name' })}
                 value={certification.name}
-                onChange={e => updateCertifications({ id: certification.id, name: e.target.value })}
+                onChange={e => updateCertification({ id: certification.id, name: e.target.value })}
               />
               <Input
                 label={intl.formatMessage({ id: 'description' })}
                 name={`certification-description-${certification.id}`}
                 placeholder={intl.formatMessage({ id: 'description' })}
                 value={certification.description}
-                onChange={e => updateCertifications({ id: certification.id, description: e.target.value })}
+                onChange={e => updateCertification({ id: certification.id, description: e.target.value })}
               />
               <Input
                 label={intl.formatMessage({ id: 'date' })}
                 name={`certification-date-${certification.id}`}
                 placeholder="2016"
                 value={certification.date}
-                onChange={e => updateCertifications({ id: certification.id, date: e.target.value })}
+                onChange={e => updateCertification({ id: certification.id, date: e.target.value })}
               />
             </div>
 
@@ -52,10 +52,10 @@ export default function Certifications() {
                 <OrderButtons
                   item={certification}
                   list={certifications}
-                  onClick={updateCertifications}
+                  onClick={updateCertification}
                 />
               </div>
-              <Button variant="borderless" onClick={() => removeCertifications(certification.id)}>
+              <Button variant="borderless" onClick={() => removeCertification(certification.id)}>
                 <Trash2 size={16} />
                 {intl.formatMessage({ id: 'delete' })}
                 {' '}
@@ -65,7 +65,7 @@ export default function Certifications() {
           </div>
         ))}
 
-      <Button onClick={addCertifications}>
+      <Button onClick={addCertification}>
         <CirclePlus size={16} />
         {intl.formatMessage({ id: 'add' })}
         {' '}
