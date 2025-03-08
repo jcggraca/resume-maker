@@ -51,4 +51,6 @@ export const messages = {
   github: 'Github',
   customization: 'customization',
   companyName: 'company name',
+  fonts: 'fonts',
+  template: 'template',
 }

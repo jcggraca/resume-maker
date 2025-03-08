@@ -1,5 +1,5 @@
 import { pdf, PDFViewer } from '@react-pdf/renderer'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useIntl } from 'react-intl'
 import ErrorBoundary from '../../ErrorBoundary'
 import { useResumeStore } from '../../store/useResumeStore'
@@ -21,21 +21,42 @@ export default function Preview() {
     registerFonts()
   }, [])
 
-  const handleDownload = async () => {
-    const renderTemplate = () => {
-      const props = { personalInfo, certifications, works, skills, languages, education }
-      switch (template) {
-        case 'Standard':
-          return <Standard {...props} />
-        case 'Minimal':
-          return <Minimal {...props} />
-        default:
-          return <Standard {...props} />
-      }
-    }
+  const translations = useMemo(() => ({
+    skills: intl.formatMessage({ id: 'skills' }),
+    experience: intl.formatMessage({ id: 'workExperience' }),
+    languages: intl.formatMessage({ id: 'languages' }),
+    education: intl.formatMessage({ id: 'education' }),
+    certifications: intl.formatMessage({ id: 'certifications' }),
+    summary: intl.formatMessage({ id: 'summary' }),
+    present: intl.formatMessage({ id: 'present' }),
+  }), [intl])
 
+  const memoizedTemplate = useMemo(() => {
+    const props = { personalInfo, certifications, works, skills, languages, education }
+
+    switch (template) {
+      case 'Standard':
+        return <Standard translations={translations} key={lastUpdated} {...props} />
+      case 'Minimal':
+        return <Minimal translations={translations} key={lastUpdated} {...props} />
+      default:
+        return <Standard translations={translations} key={lastUpdated} {...props} />
+    }
+  }, [
+    template,
+    translations,
+    personalInfo,
+    certifications,
+    works,
+    skills,
+    languages,
+    education,
+    lastUpdated,
+  ])
+
+  const handleDownload = useCallback(async () => {
     try {
-      const blob = await pdf(renderTemplate()).toBlob()
+      const blob = await pdf(memoizedTemplate).toBlob()
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
@@ -48,29 +69,19 @@ export default function Preview() {
     catch (error) {
       console.error('Error generating PDF:', error)
     }
-  }
+  }, [memoizedTemplate])
 
-  const closePreviewModal = () => {
+  const closePreviewModal = useCallback(() => {
     setDisplayResume(false)
-  }
+  }, [])
 
-  const memoizedTemplate = useMemo(() => {
-    const props = { personalInfo, certifications, works, skills, languages, education }
-
-    switch (template) {
-      case 'Standard':
-        return <Standard key={lastUpdated} {...props} />
-      case 'Minimal':
-        return <Minimal key={lastUpdated} {...props} />
-      default:
-        return <Standard key={lastUpdated} {...props} />
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayResume])
+  const openPreviewModal = useCallback(() => {
+    setDisplayResume(true)
+  }, [])
 
   return (
     <section id="preview" className={styles.root}>
-      <Button onClick={() => setDisplayResume(true)}>
+      <Button onClick={openPreviewModal}>
         {intl.formatMessage({ id: 'previewResume' })}
       </Button>
 

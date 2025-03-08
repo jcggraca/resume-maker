@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import type { Certification, Education, Language, PersonalInfo, Skill, Work } from '../../../store/useResumeStore'
+import type { Translations } from '../../../utils/types'
 import {
   Document,
   Link,
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   sectionTitle: {
+    textTransform: 'capitalize',
     fontSize: 12,
     fontWeight: 'bold',
     borderBottomWidth: 1,
@@ -107,6 +109,10 @@ const styles = StyleSheet.create({
   projectLink: {
     color: '#0000EE',
   },
+  skills: {
+    fontSize: 10,
+    maxWidth: 470,
+  },
 })
 
 interface MinimalProps {
@@ -116,49 +122,36 @@ interface MinimalProps {
   skills: Skill[]
   languages: Language[]
   education: Education[]
+  translations: Translations
 }
 
-const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills, languages, education }) => {
+const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills, languages, education, translations }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.name}>{personalInfo.name}</Text>
           <Text style={styles.contactInfo}>
-            {personalInfo.location
-              ? <Text style={styles.contactItem}>{personalInfo.location}</Text>
-              : <Text style={{ display: 'none' }}>{}</Text>}
-
+            {personalInfo.location && <Text style={styles.contactItem}>{personalInfo.location}</Text>}
             {personalInfo.location && (personalInfo.email || personalInfo.website || personalInfo.github || personalInfo.linkedin) ? ' | ' : ''}
 
-            {personalInfo.email
-              ? <Link href={`mailto:${personalInfo.email}`} style={styles.link}>{cleanUrl(personalInfo.email)}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
-
+            {personalInfo.email && <Link href={`mailto:${personalInfo.email}`} style={styles.link}>{cleanUrl(personalInfo.email)}</Link>}
             {personalInfo.email && (personalInfo.github || personalInfo.website || personalInfo.linkedin) ? ' | ' : ''}
 
-            {personalInfo.website
-              ? <Link href={personalInfo.website} style={styles.link}>{cleanUrl(personalInfo.website)}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
-
+            {personalInfo.website && <Link href={personalInfo.website} style={styles.link}>{cleanUrl(personalInfo.website)}</Link>}
             {personalInfo.website && (personalInfo.github || personalInfo.linkedin) ? ' | ' : ''}
 
-            {personalInfo.github
-              ? <Link href={personalInfo.github} style={styles.link}>{cleanUrl(personalInfo.github)}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
-
+            {personalInfo.github && <Link href={personalInfo.github} style={styles.link}>{cleanUrl(personalInfo.github)}</Link>}
             {personalInfo.github && personalInfo.linkedin ? ' | ' : ''}
 
-            {personalInfo.linkedin
-              ? <Link href={personalInfo.linkedin} style={styles.link}>{cleanUrl(personalInfo.linkedin)}</Link>
-              : <Link style={{ display: 'none' }} href="#">{}</Link>}
+            {personalInfo.linkedin && <Link href={personalInfo.linkedin} style={styles.link}>{cleanUrl(personalInfo.linkedin)}</Link>}
           </Text>
 
           <Text>{personalInfo.summary}</Text>
         </View>
 
         <View style={styles.skillsSection}>
-          <Text style={styles.sectionTitle}>Skills</Text>
+          <Text style={styles.sectionTitle}>{translations.skills}</Text>
           {skills.map(skill => (
             <View key={skill.id} style={styles.skillsRow}>
               {skill.name && (
@@ -167,13 +160,13 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
                   :
                 </Text>
               )}
-              <Text>{skill.description}</Text>
+              <Text style={styles.skills}>{skill.description}</Text>
             </View>
           ))}
         </View>
 
         <View>
-          <Text style={styles.sectionTitle}>Experience</Text>
+          <Text style={styles.sectionTitle}>{translations.experience}</Text>
           {works.map(work => (
             <View key={work.id} style={styles.experienceItem}>
               <View style={styles.experienceHeader}>
@@ -188,7 +181,7 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
                   {' '}
                   –
                   {' '}
-                  {work.currentlyWorking ? 'Present' : work.endDate}
+                  {work.currentlyWorking ? translations.present : work.endDate}
                 </Text>
               </View>
               {work.points.map(point => (
@@ -202,7 +195,7 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
         </View>
 
         <View style={styles.certifications}>
-          <Text style={styles.sectionTitle}>Languages</Text>
+          <Text style={styles.sectionTitle}>{translations.languages}</Text>
           {languages.map(language => (
             <View key={language.id} style={styles.certificationItem}>
               <Text>
@@ -214,7 +207,7 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
         </View>
 
         <View style={styles.certifications}>
-          <Text style={styles.sectionTitle}>Education</Text>
+          <Text style={styles.sectionTitle}>{translations.education}</Text>
           {education.map(item => (
             <View key={item.id}>
               <View style={styles.certificationItem}>
@@ -227,14 +220,12 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
         </View>
 
         <View style={styles.certifications}>
-          <Text style={styles.sectionTitle}>Certifications</Text>
+          <Text style={styles.sectionTitle}>{translations.certifications}</Text>
           {certifications.map(certification => (
             <View key={certification.id} style={styles.certificationItem}>
               <Text>
                 {certification.name}
-                ,
-                {' '}
-                {certification.description}
+                {certification.description && `, ${certification.description}`}
               </Text>
               <Text style={styles.dateRange}>{certification.date}</Text>
             </View>

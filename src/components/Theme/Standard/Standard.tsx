@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import type { Certification, Education, Language, PersonalInfo, Skill, Work } from '../../../store/useResumeStore'
+import type { Translations } from '../../../utils/types'
 import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 import { useSettingsStore } from '../../../store/useSettingsStore'
 import { cleanUrl } from '../../../utils/form'
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   sectionTitle: {
+    textTransform: 'uppercase',
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
@@ -79,9 +81,10 @@ interface StandardProps {
   skills: Skill[]
   languages: Language[]
   education: Education[]
+  translations: Translations
 }
 
-const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skills, languages, education }) => {
+const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skills, languages, education, translations }) => {
   return (
     <Document>
       <Page style={styles.page}>
@@ -110,14 +113,14 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
 
         {personalInfo.summary && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>SUMMARY</Text>
+            <Text style={styles.sectionTitle}>{translations.summary}</Text>
             <Text>{personalInfo.summary}</Text>
           </View>
         )}
 
         {works.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
+            <Text style={styles.sectionTitle}>{translations.experience}</Text>
             {works.map(experience => (
               <View key={experience.id} style={styles.item}>
                 <View style={styles.itemHeader}>
@@ -127,7 +130,7 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
                     {' '}
                     -
                     {' '}
-                    {experience.currentlyWorking ? 'Present' : experience.endDate}
+                    {experience.currentlyWorking ? translations.present : experience.endDate}
                   </Text>
                 </View>
                 <View style={styles.itemHeader}>
@@ -147,7 +150,7 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
 
         {skills.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>SKILLS</Text>
+            <Text style={styles.sectionTitle}>{translations.skills}</Text>
 
             {skills.map(skill => (
               <View style={styles.itemSkill} key={skill.id}>
@@ -163,7 +166,7 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
 
         {languages.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>LANGUAGES</Text>
+            <Text style={styles.sectionTitle}>{translations.languages}</Text>
 
             {languages.map(language => (
               <View key={language.id}>
@@ -178,7 +181,7 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
 
         {education.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>EDUCATION</Text>
+            <Text style={styles.sectionTitle}>{translations.education}</Text>
 
             {education.map(item => (
               <View key={item.id} style={styles.item}>
@@ -195,7 +198,7 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
 
         {certifications.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>CERTIFICATIONS</Text>
+            <Text style={styles.sectionTitle}>{translations.certifications}</Text>
 
             {certifications.map(item => (
               <View key={item.id} style={styles.itemHeader}>
