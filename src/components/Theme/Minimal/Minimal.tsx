@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
   },
+  jobTitle: {
+    fontSize: 12,
+    marginBottom: 5,
+  },
   contactInfo: {
     flexDirection: 'row',
     borderBottomWidth: 1,
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 5,
   },
-  jobTitle: {
+  role: {
     fontWeight: 'bold',
   },
   dateRange: {
@@ -131,6 +135,7 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <Text style={styles.name}>{personalInfo.name}</Text>
+          <Text style={styles.jobTitle}>{personalInfo.jobTitle}</Text>
           <Text style={styles.contactInfo}>
             {personalInfo.location && <Text style={styles.contactItem}>{personalInfo.location}</Text>}
             {personalInfo.location && (personalInfo.email || personalInfo.website || personalInfo.github || personalInfo.linkedin) ? ' | ' : ''}
@@ -170,7 +175,7 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
           {works.map(work => (
             <View key={work.id} style={styles.experienceItem}>
               <View style={styles.experienceHeader}>
-                <Text style={styles.jobTitle}>
+                <Text style={styles.role}>
                   {work.company}
                   ,
                   {' '}
