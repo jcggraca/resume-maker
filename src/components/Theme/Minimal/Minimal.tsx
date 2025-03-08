@@ -155,21 +155,6 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
           <Text>{personalInfo.summary}</Text>
         </View>
 
-        <View style={styles.skillsSection}>
-          <Text style={styles.sectionTitle}>{translations.skills}</Text>
-          {skills.map(skill => (
-            <View key={skill.id} style={styles.skillsRow}>
-              {skill.name && (
-                <Text style={styles.skillCategory}>
-                  {skill.name}
-                  :
-                </Text>
-              )}
-              <Text style={styles.skills}>{skill.description}</Text>
-            </View>
-          ))}
-        </View>
-
         <View>
           <Text style={styles.sectionTitle}>{translations.experience}</Text>
           {works.map(work => (
@@ -195,6 +180,21 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
                   <Text style={styles.bulletText}>{point.description}</Text>
                 </View>
               ))}
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.skillsSection}>
+          <Text style={styles.sectionTitle}>{translations.skills}</Text>
+          {skills.map(skill => (
+            <View key={skill.id} style={styles.skillsRow}>
+              {skill.name && (
+                <Text style={styles.skillCategory}>
+                  {skill.name}
+                  :
+                </Text>
+              )}
+              <Text style={styles.skills}>{skill.description}</Text>
             </View>
           ))}
         </View>
