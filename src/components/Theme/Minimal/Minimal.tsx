@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   header: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   name: {
     fontSize: 16,
@@ -53,9 +53,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#000',
     marginTop: 10,
-    marginBottom: 5,
-  },
-  skillsSection: {
     marginBottom: 5,
   },
   skillCategory: {
@@ -184,7 +181,7 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
           ))}
         </View>
 
-        <View style={styles.skillsSection}>
+        <View>
           <Text style={styles.sectionTitle}>{translations.skills}</Text>
           {skills.map(skill => (
             <View key={skill.id} style={styles.skillsRow}>
