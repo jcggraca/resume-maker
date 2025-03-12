@@ -57,11 +57,18 @@ const styles = StyleSheet.create({
   },
   skillCategory: {
     fontWeight: 'bold',
-    marginRight: 5,
+    marginRight: 2,
+  },
+  languageCategory: {
+    fontWeight: 'bold',
+    marginRight: 2,
   },
   skillsRow: {
     flexDirection: 'row',
     marginBottom: 5,
+  },
+  languageRow: {
+    flexDirection: 'row',
   },
   experienceItem: {
     marginBottom: 5,
@@ -94,7 +101,6 @@ const styles = StyleSheet.create({
   certificationItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
   },
   projectItem: {
     marginBottom: 2,
@@ -199,11 +205,9 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
         <View style={styles.certifications}>
           <Text style={styles.sectionTitle}>{translations.languages}</Text>
           {languages.map(language => (
-            <View key={language.id} style={styles.certificationItem}>
-              <Text>
-                {language.name}
-                {language.level && ` - ${language.level}`}
-              </Text>
+            <View key={language.id} style={styles.languageRow}>
+              <Text style={styles.languageCategory}>{language.name}</Text>
+              <Text style={styles.skills}>{language.level && `- ${language.level}`}</Text>
             </View>
           ))}
         </View>
