@@ -4,13 +4,16 @@
 
 Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume.
 
+<img alt="screen capture" src="public/images/image1.png" />
+
 ## Future Implementations
 
-- [ ] **Projects Section**
+- [x] **Projects Section**
 - [ ] **Courses Section**
 - [ ] **More Templates**
-- [ ] **Better mobile support**
+- [x] **Better mobile support**
 - [ ] **Additional Language Support**
+- [ ] **Cover Letter**
 
 ## How to Contribute
 

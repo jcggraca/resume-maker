@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
-      @
+      ©
       {currentYear}
       {' '}
       <a
@@ -14,9 +14,9 @@ export default function Footer() {
         href="https://joaograca.dev"
       >
         João Graça
-      </a>,
+      </a>
       {' '}
-      check the code any give a star on{' '}
+      — If you liked this app, consider giving it a star on {' '}
       <a
         target="_blank"
         rel="noopener noreferrer"

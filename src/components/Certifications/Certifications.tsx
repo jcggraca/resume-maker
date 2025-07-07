@@ -1,9 +1,9 @@
-import { CirclePlus, Trash2 } from 'lucide-react'
 import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
-import Button from '../ui/Button/Button'
 import Input from '../ui/Input/Input'
+import AddButton from '../ui/AddButton/AddButton'
+import DeleteButton from '../ui/DeleteButton/DeleteButton'
 
 export default function Certifications() {
   const intl = useIntl()
@@ -42,29 +42,18 @@ export default function Certifications() {
             </div>
 
             <div className="flexBetween">
-              <div>
-                <OrderButtons
-                  item={certification}
-                  list={certifications}
-                  onClick={updateCertification}
-                />
-              </div>
-              <Button variant="borderless" onClick={() => removeCertification(certification.id)}>
-                <Trash2 size={16} />
-                {intl.formatMessage({ id: 'delete' })}
-                {' '}
-                {intl.formatMessage({ id: 'certification' })}
-              </Button>
+              <OrderButtons
+                item={certification}
+                list={certifications}
+                onClick={updateCertification}
+              />
+              
+              <DeleteButton textId="certification" onClick={() => removeCertification(certification.id)} />
             </div>
           </div>
         ))}
 
-      <Button onClick={addCertification}>
-        <CirclePlus size={16} />
-        {intl.formatMessage({ id: 'add' })}
-        {' '}
-        {intl.formatMessage({ id: 'certification' })}
-      </Button>
+      <AddButton textId="certification" onClick={addCertification} />
     </section>
   )
 }

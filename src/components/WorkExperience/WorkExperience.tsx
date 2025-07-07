@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, CirclePlus, Trash2 } from 'lucide-react'
+import { ArrowDown, ArrowUp, Trash2 } from 'lucide-react'
 import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
@@ -7,6 +7,8 @@ import CheckBox from '../ui/CheckBox/CheckBox'
 import Input from '../ui/Input/Input'
 import TextArea from '../ui/TextArea/TextArea'
 import styles from './WorkExperience.module.css'
+import AddButton from '../ui/AddButton/AddButton'
+import DeleteButton from '../ui/DeleteButton/DeleteButton'
 
 export default function WorkExperience() {
   const intl = useIntl()
@@ -118,29 +120,18 @@ export default function WorkExperience() {
           </Button>
 
           <div className="flexBetween">
-            <div>
-              <OrderButtons
-                item={work}
-                list={works}
-                onClick={updateWork}
-              />
-            </div>
-            <Button variant="borderless" onClick={() => removeWork(work.id)}>
-              <Trash2 size={16} />
-              {intl.formatMessage({ id: 'delete' })}
-              {' '}
-              {intl.formatMessage({ id: 'work' })}
-            </Button>
+            <OrderButtons
+              item={work}
+              list={works}
+              onClick={updateWork}
+            />
+
+            <DeleteButton textId="work" onClick={() => removeWork(work.id)} />
           </div>
         </div>
       ))}
 
-      <Button onClick={addWork}>
-        <CirclePlus size={16} />
-        {intl.formatMessage({ id: 'add' })}
-        {' '}
-        {intl.formatMessage({ id: 'work' })}
-      </Button>
+      <AddButton textId="work" onClick={addWork} />
     </section>
   )
 }

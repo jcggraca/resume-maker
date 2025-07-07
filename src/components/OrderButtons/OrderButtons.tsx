@@ -14,7 +14,7 @@ const OrderButtons: FC<OrderButtonsProps> = ({ item, list, onClick }) => {
   const intl = useIntl()
 
   return (
-    <>
+    <div>
       <Button
         variant="borderless"
         disabled={item.order === 0}
@@ -33,7 +33,7 @@ const OrderButtons: FC<OrderButtonsProps> = ({ item, list, onClick }) => {
       >
         <ArrowDown size={16} />
       </Button>
-    </>
+    </div>
   )
 }
 

@@ -1,10 +1,10 @@
-import { CirclePlus, Trash2 } from 'lucide-react'
 import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
-import Button from '../ui/Button/Button'
 import Input from '../ui/Input/Input'
 import TextArea from '../ui/TextArea/TextArea'
+import AddButton from '../ui/AddButton/AddButton'
+import DeleteButton from '../ui/DeleteButton/DeleteButton'
 
 export default function Skills() {
   const intl = useIntl()
@@ -39,29 +39,18 @@ export default function Skills() {
             </div>
 
             <div className="flexBetween">
-              <div>
-                <OrderButtons
-                  item={skill}
-                  list={skills}
-                  onClick={updateSkill}
-                />
-              </div>
-              <Button variant="borderless" onClick={() => removeSkill(skill.id)}>
-                <Trash2 size={16} />
-                {intl.formatMessage({ id: 'delete' })}
-                {' '}
-                {intl.formatMessage({ id: 'skill' })}
-              </Button>
+              <OrderButtons
+                item={skill}
+                list={skills}
+                onClick={updateSkill}
+              />
+
+              <DeleteButton textId="skill" onClick={() => removeSkill(skill.id)} />
             </div>
           </div>
         ))}
 
-      <Button onClick={addSkill}>
-        <CirclePlus size={16} />
-        {intl.formatMessage({ id: 'add' })}
-        {' '}
-        {intl.formatMessage({ id: 'skill' })}
-      </Button>
+      <AddButton textId="skill" onClick={addSkill} />
     </section>
   )
 }

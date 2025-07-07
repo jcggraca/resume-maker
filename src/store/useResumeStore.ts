@@ -61,6 +61,14 @@ export interface Certification {
   order: number
 }
 
+export interface Project {
+  id: string
+  name: string
+  description: string
+  link: string
+  order: number
+}
+
 interface ResumeState {
   personalInfo: PersonalInfo
   skills: Skill[]
@@ -68,6 +76,7 @@ interface ResumeState {
   education: Education[]
   works: Work[]
   certifications: Certification[]
+  projects: Project[]
   hobbies: string
   lastUpdated: string
   setPersonalInfo: (data: Partial<PersonalInfo>) => void
@@ -89,6 +98,9 @@ interface ResumeState {
   addCertification: () => void
   updateCertification: (data: Partial<Certification>) => void
   removeCertification: (id: string) => void
+  addProject: () => void
+  updateProject: (data: Partial<Project>) => void
+  removeProject: (id: string) => void
   updateHobbies: (hobbies: string) => void
 }
 
@@ -113,6 +125,7 @@ export const useResumeStore = create(
       education: [],
       works: [],
       certifications: [],
+      projects: [],
       hobbies: '',
       lastUpdated: getTime,
       setPersonalInfo: data => set(state => ({ personalInfo: { ...state.personalInfo, ...data }, lastUpdated: getTime })),
@@ -300,18 +313,18 @@ export const useResumeStore = create(
         lastUpdated: getTime,
         works: state.works.map(item => (item.id === id
           ? {
-              ...item,
-              points: [
-                ...item.points,
-                {
-                  id: crypto.randomUUID(),
-                  order: item.points.length > 0
-                    ? Math.max(...item.points.map(p => p.order)) + 1
-                    : 0,
-                  description: '',
-                },
-              ],
-            }
+            ...item,
+            points: [
+              ...item.points,
+              {
+                id: crypto.randomUUID(),
+                order: item.points.length > 0
+                  ? Math.max(...item.points.map(p => p.order)) + 1
+                  : 0,
+                description: '',
+              },
+            ],
+          }
           : item)),
       })),
       updateWorkPoint: (workID, pointID, order, description) =>
@@ -363,14 +376,14 @@ export const useResumeStore = create(
           works: state.works.map(work =>
             work.id === workID
               ? {
-                  ...work,
-                  points: work.points
-                    .filter(point => point.id !== pointID)
-                    .map((point, index) => ({
-                      ...point,
-                      order: index,
-                    })),
-                }
+                ...work,
+                points: work.points
+                  .filter(point => point.id !== pointID)
+                  .map((point, index) => ({
+                    ...point,
+                    order: index,
+                  })),
+              }
               : work,
           ),
         })),
@@ -412,6 +425,50 @@ export const useResumeStore = create(
         set(state => ({
           lastUpdated: getTime,
           certifications: state.certifications
+            .filter(cert => cert.id !== id)
+            .map((cert, index) => ({
+              ...cert,
+              order: index,
+            })),
+        })),
+      addProject: () => set(state => ({
+        lastUpdated: getTime,
+        projects: [
+          ...state.projects,
+          {
+            id: crypto.randomUUID(),
+            name: '',
+            description: '',
+            link: '',
+            order: state.certifications.length > 0
+              ? Math.max(...state.certifications.map(p => p.order)) + 1
+              : 0,
+          },
+        ],
+      })),
+      updateProject: data => set(state => ({
+        lastUpdated: getTime,
+        projects: state.projects.map((item) => {
+          if (item.id === data?.id) {
+            if (data.order !== undefined) {
+              const itemWithSameOrder = state.projects.find(p => p.order === data.order)
+              if (itemWithSameOrder) {
+                itemWithSameOrder.order = item.order
+              }
+              return { ...item, ...data }
+            }
+            return { ...item, ...data }
+          }
+          return item
+        }).sort((a, b) => a.order - b.order).map((item, index) => ({
+          ...item,
+          order: index,
+        })),
+      })),
+      removeProject: id =>
+        set(state => ({
+          lastUpdated: getTime,
+          projects: state.projects
             .filter(cert => cert.id !== id)
             .map((cert, index) => ({
               ...cert,

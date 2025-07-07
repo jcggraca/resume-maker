@@ -11,6 +11,7 @@ const Education = lazy(() => import('./components/Education/Education'))
 const Skills = lazy(() => import('./components/Skills/Skills'))
 const Languages = lazy(() => import('./components/Languages/Languages'))
 const Certifications = lazy(() => import('./components/Certifications/Certifications'))
+const Projects = lazy(() => import('./components/Projects/Projects'))
 const Hobbies = lazy(() => import('./components/Hobbies/Hobbies'))
 
 const LazyWrapper: FC<{ children: ReactNode }> = ({ children }) => (
@@ -35,6 +36,7 @@ export default function App() {
           <Skills />
           <Languages />
           <Certifications />
+          <Projects />
           <Hobbies />
         </LazyWrapper>
       </main>
