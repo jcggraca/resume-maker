@@ -53,4 +53,10 @@ export const messages = {
   companyName: 'company name',
   fonts: 'fonts',
   template: 'template',
+  hobbies: 'hobbies',
+  putOnly: "Put only if ...",
+  demonstrateSkills: "they demonstrate skills or qualities relevant to the job",
+  makeMemorable: "they set you apart or make you memorable, especially in fields where personality and cultural fit matter",
+  earlyCareer: "you're early in your career or limited work experience",
+  avoidGeneric: "And avoid generic interests.",
 }

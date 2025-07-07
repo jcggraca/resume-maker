@@ -6,4 +6,5 @@ export interface Translations {
   certifications: string
   summary: string
   present: string
+  hobbies: string
 }

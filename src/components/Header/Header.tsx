@@ -1,7 +1,8 @@
-import { Moon, Sun } from 'lucide-react'
+import { Moon, Sun, FileUser } from 'lucide-react'
 import { useEffect } from 'react'
 import { useIntl } from 'react-intl'
 import { useSettingsStore } from '../../store/useSettingsStore'
+import PreviewButton from '../Preview/PreviewButton'
 import styles from './Header.module.css'
 
 export default function Header() {
@@ -14,9 +15,12 @@ export default function Header() {
 
   return (
     <header className={styles.root}>
-      <h1 className={styles.title}>Resume Maker</h1>
+      <h1 className={styles.desktopTitle}>Resume Maker</h1>
+      <h1 className={styles.mobileTitle}><FileUser /></h1>
 
       <div className={styles.rightSide}>
+        <PreviewButton />
+
         <div>
           <label className="sr-only" htmlFor="language-select">{intl.formatMessage({ id: 'selectLanguage' })}</label>
           <select id="language-select" onChange={e => setLanguage(e.target.value)} defaultValue={language}>

@@ -10,7 +10,7 @@ export default function Certifications() {
   const { certifications, addCertification, updateCertification, removeCertification } = useResumeStore()
 
   return (
-    <section id="certifications">
+    <section id="certifications" className='section'>
       <h2>{intl.formatMessage({ id: 'certifications' })}</h2>
 
       {certifications

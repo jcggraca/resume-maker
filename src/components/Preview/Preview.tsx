@@ -1,5 +1,5 @@
 import { pdf, PDFViewer } from '@react-pdf/renderer'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useIntl } from 'react-intl'
 import ErrorBoundary from '../../ErrorBoundary'
 import { useResumeStore } from '../../store/useResumeStore'
@@ -11,11 +11,15 @@ import Standard from '../Theme/Standard/Standard'
 import Button from '../ui/Button/Button'
 import styles from './Preview.module.css'
 
-export default function Preview() {
+interface PreviewProps {
+  isOpen: boolean
+  onClose: () => void
+};
+
+export default function Preview({ isOpen, onClose }: PreviewProps) {
   const intl = useIntl()
   const { template } = useSettingsStore()
-  const { personalInfo, certifications, works, skills, languages, education, lastUpdated } = useResumeStore()
-  const [displayResume, setDisplayResume] = useState(false)
+  const { personalInfo, certifications, works, skills, languages, education, hobbies, lastUpdated } = useResumeStore()
 
   useEffect(() => {
     registerFonts()
@@ -29,10 +33,11 @@ export default function Preview() {
     certifications: intl.formatMessage({ id: 'certifications' }),
     summary: intl.formatMessage({ id: 'summary' }),
     present: intl.formatMessage({ id: 'present' }),
+    hobbies: intl.formatMessage({ id: 'hobbies' }),
   }), [intl])
 
   const memoizedTemplate = useMemo(() => {
-    const props = { personalInfo, certifications, works, skills, languages, education }
+    const props = { personalInfo, certifications, works, skills, languages, education, hobbies }
 
     switch (template) {
       case 'Standard':
@@ -52,6 +57,7 @@ export default function Preview() {
     languages,
     education,
     lastUpdated,
+    hobbies
   ])
 
   const handleDownload = useCallback(async () => {
@@ -71,41 +77,25 @@ export default function Preview() {
     }
   }, [memoizedTemplate])
 
-  const closePreviewModal = useCallback(() => {
-    setDisplayResume(false)
-  }, [])
-
-  const openPreviewModal = useCallback(() => {
-    setDisplayResume(true)
-  }, [])
-
   return (
-    <section id="preview" className={styles.root}>
-      <Button onClick={openPreviewModal}>
-        {intl.formatMessage({ id: 'previewResume' })}
-      </Button>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+    >
+      <div className={styles.group}>
+        <Button onClick={onClose}>
+          {intl.formatMessage({ id: 'hideResume' })}
+        </Button>
+        <Button variant="secondary" onClick={handleDownload}>
+          {intl.formatMessage({ id: 'downloadPDF' })}
+        </Button>
+      </div>
 
-      <Modal
-        isOpen={displayResume}
-        onClose={closePreviewModal}
-      >
-        <div className={styles.group}>
-          <Button onClick={closePreviewModal}>
-            {intl.formatMessage({ id: 'hideResume' })}
-          </Button>
-          <Button variant="secondary" onClick={handleDownload}>
-            {intl.formatMessage({ id: 'downloadPDF' })}
-          </Button>
-        </div>
-
-        <ErrorBoundary>
-          {displayResume && (
-            <PDFViewer key={lastUpdated} width="100%" height="90%">
-              {memoizedTemplate}
-            </PDFViewer>
-          )}
-        </ErrorBoundary>
-      </Modal>
-    </section>
+      <ErrorBoundary>
+        <PDFViewer key={lastUpdated} width="100%" height="90%">
+          {memoizedTemplate}
+        </PDFViewer>
+      </ErrorBoundary>
+    </Modal>
   )
 }

@@ -53,4 +53,10 @@ export const messages = {
   companyName: 'nome da empresa',
   fonts: 'fontes',
   template: 'modelo',
+  hobbies: 'Hobbies',
+  putOnly: "Inclua apenas se...",
+  demonstrateSkills: "demonstrarem competências ou qualidades relevantes para o cargo",
+  makeMemorable: "o diferenciarem ou o tornarem memorável, especialmente em áreas onde a personalidade e a integração cultural são importantes",
+  earlyCareer: "estiver no início da carreira ou tiver pouca experiência profissional",
+  avoidGeneric: "E evite interesses genéricos.",
 }

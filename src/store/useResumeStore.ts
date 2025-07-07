@@ -68,6 +68,7 @@ interface ResumeState {
   education: Education[]
   works: Work[]
   certifications: Certification[]
+  hobbies: string
   lastUpdated: string
   setPersonalInfo: (data: Partial<PersonalInfo>) => void
   addSkill: () => void
@@ -88,6 +89,7 @@ interface ResumeState {
   addCertification: () => void
   updateCertification: (data: Partial<Certification>) => void
   removeCertification: (id: string) => void
+  updateHobbies: (hobbies: string) => void
 }
 
 const getTime = new Date().getTime().toString()
@@ -111,6 +113,7 @@ export const useResumeStore = create(
       education: [],
       works: [],
       certifications: [],
+      hobbies: '',
       lastUpdated: getTime,
       setPersonalInfo: data => set(state => ({ personalInfo: { ...state.personalInfo, ...data }, lastUpdated: getTime })),
       addSkill: () => set(state => ({
@@ -415,6 +418,10 @@ export const useResumeStore = create(
               order: index,
             })),
         })),
+      updateHobbies: (hobbies: string) => set(() => ({
+        lastUpdated: getTime,
+        hobbies,
+      })),
     }),
     {
       name: 'resume-storage',

@@ -1,15 +1,23 @@
-import BackToTop from './components/BackToTop/BackToTop'
-import Certifications from './components/Certifications/Certifications'
+import { FC, lazy, ReactNode, Suspense } from 'react'
 import Customization from './components/Customization/Customization'
-import Education from './components/Education/Education'
-import Footer from './components/Footer/Footer'
 import Header from './components/Header/Header'
-import Languages from './components/Languages/Languages'
 import Nav from './components/Nav/Nav'
 import PersonalInfo from './components/PersonalInfo/PersonalInfo'
-import Preview from './components/Preview/Preview'
-import Skills from './components/Skills/Skills'
-import WorkExperience from './components/WorkExperience/WorkExperience'
+import BackToTop from './components/BackToTop/BackToTop'
+import Footer from './components/Footer/Footer'
+
+const WorkExperience = lazy(() => import('./components/WorkExperience/WorkExperience'))
+const Education = lazy(() => import('./components/Education/Education'))
+const Skills = lazy(() => import('./components/Skills/Skills'))
+const Languages = lazy(() => import('./components/Languages/Languages'))
+const Certifications = lazy(() => import('./components/Certifications/Certifications'))
+const Hobbies = lazy(() => import('./components/Hobbies/Hobbies'))
+
+const LazyWrapper: FC<{ children: ReactNode }> = ({ children }) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    {children}
+  </Suspense>
+)
 
 export default function App() {
   return (
@@ -18,14 +26,17 @@ export default function App() {
       <Nav />
 
       <main className="main">
-        <Preview />
         <Customization />
         <PersonalInfo />
-        <WorkExperience />
-        <Education />
-        <Skills />
-        <Languages />
-        <Certifications />
+
+        <LazyWrapper>
+          <WorkExperience />
+          <Education />
+          <Skills />
+          <Languages />
+          <Certifications />
+          <Hobbies />
+        </LazyWrapper>
       </main>
 
       <BackToTop />

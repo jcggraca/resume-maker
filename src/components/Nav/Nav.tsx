@@ -8,7 +8,6 @@ interface Link {
 }
 
 const links: Link[] = [
-  { url: '#preview', label: 'preview' },
   { url: '#customization', label: 'customization' },
   { url: '#personal', label: 'personalInfo' },
   { url: '#work', label: 'workExperience' },
@@ -16,6 +15,7 @@ const links: Link[] = [
   { url: '#skills', label: 'skills' },
   { url: '#languages', label: 'languages' },
   { url: '#certifications', label: 'certifications' },
+  { url: '#hobbies', label: 'hobbies' },
 ]
 
 export default function Nav() {

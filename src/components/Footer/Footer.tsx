@@ -14,6 +14,15 @@ export default function Footer() {
         href="https://joaograca.dev"
       >
         João Graça
+      </a>,
+      {' '}
+      check the code any give a star on{' '}
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/jcggraca/resume-maker"
+      >
+        Github
       </a>
     </footer>
   )

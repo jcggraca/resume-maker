@@ -130,9 +130,10 @@ interface MinimalProps {
   languages: Language[]
   education: Education[]
   translations: Translations
+  hobbies: string
 }
 
-const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills, languages, education, translations }) => {
+const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills, languages, education, translations, hobbies }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -158,85 +159,102 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
           <Text>{personalInfo.summary}</Text>
         </View>
 
-        <View>
-          <Text style={styles.sectionTitle}>{translations.experience}</Text>
-          {works.map(work => (
-            <View key={work.id} style={styles.experienceItem}>
-              <View style={styles.experienceHeader}>
-                <Text style={styles.role}>
-                  {work.company}
-                  ,
-                  {' '}
-                  {work.role}
-                </Text>
-                <Text style={styles.dateRange}>
-                  {work.startDate}
-                  {' '}
-                  –
-                  {' '}
-                  {work.currentlyWorking ? translations.present : work.endDate}
-                </Text>
-              </View>
-              {work.points.map(point => (
-                <View key={point.id} style={styles.bulletPoint}>
-                  <Text style={styles.bullet}>•</Text>
-                  <Text style={styles.bulletText}>{point.description}</Text>
+        {works.length > 0 && (
+          <View>
+            <Text style={styles.sectionTitle}>{translations.experience}</Text>
+            {works.map(work => (
+              <View key={work.id} style={styles.experienceItem}>
+                <View style={styles.experienceHeader}>
+                  <Text style={styles.role}>
+                    {work.company}
+                    ,
+                    {' '}
+                    {work.role}
+                  </Text>
+                  <Text style={styles.dateRange}>
+                    {work.startDate}
+                    {' '}
+                    –
+                    {' '}
+                    {work.currentlyWorking ? translations.present : work.endDate}
+                  </Text>
                 </View>
-              ))}
-            </View>
-          ))}
-        </View>
-
-        <View>
-          <Text style={styles.sectionTitle}>{translations.skills}</Text>
-          {skills.map(skill => (
-            <View key={skill.id} style={styles.skillsRow}>
-              {skill.name && (
-                <Text style={styles.skillCategory}>
-                  {skill.name}
-                  :
-                </Text>
-              )}
-              <Text style={styles.skills}>{skill.description}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.certifications}>
-          <Text style={styles.sectionTitle}>{translations.languages}</Text>
-          {languages.map(language => (
-            <View key={language.id} style={styles.languageRow}>
-              <Text style={styles.languageCategory}>{language.name}</Text>
-              <Text style={styles.skills}>{language.level && `- ${language.level}`}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.certifications}>
-          <Text style={styles.sectionTitle}>{translations.education}</Text>
-          {education.map(item => (
-            <View key={item.id}>
-              <View style={styles.certificationItem}>
-                <Text>{item.institution}</Text>
-                <Text style={styles.dateRange}>{item.date}</Text>
+                {work.points.map(point => (
+                  <View key={point.id} style={styles.bulletPoint}>
+                    <Text style={styles.bullet}>•</Text>
+                    <Text style={styles.bulletText}>{point.description}</Text>
+                  </View>
+                ))}
               </View>
-              <Text>{item.degree}</Text>
-            </View>
-          ))}
-        </View>
+            ))}
+          </View>
+        )}
 
-        <View style={styles.certifications}>
-          <Text style={styles.sectionTitle}>{translations.certifications}</Text>
-          {certifications.map(certification => (
-            <View key={certification.id} style={styles.certificationItem}>
-              <Text>
-                {certification.name}
-                {certification.description && `, ${certification.description}`}
-              </Text>
-              <Text style={styles.dateRange}>{certification.date}</Text>
-            </View>
-          ))}
-        </View>
+        {skills.length > 0 && (
+          <View>
+            <Text style={styles.sectionTitle}>{translations.skills}</Text>
+            {skills.map(skill => (
+              <View key={skill.id} style={styles.skillsRow}>
+                {skill.name && (
+                  <Text style={styles.skillCategory}>
+                    {skill.name}
+                    :
+                  </Text>
+                )}
+                <Text style={styles.skills}>{skill.description}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {languages.length > 0 && (
+          <View style={styles.certifications}>
+            <Text style={styles.sectionTitle}>{translations.languages}</Text>
+            {languages.map(language => (
+              <View key={language.id} style={styles.languageRow}>
+                <Text style={styles.languageCategory}>{language.name}</Text>
+                <Text style={styles.skills}>{language.level && `- ${language.level}`}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {education.length > 0 && (
+          <View style={styles.certifications}>
+            <Text style={styles.sectionTitle}>{translations.education}</Text>
+            {education.map(item => (
+              <View key={item.id}>
+                <View style={styles.certificationItem}>
+                  <Text>{item.institution}</Text>
+                  <Text style={styles.dateRange}>{item.date}</Text>
+                </View>
+                <Text>{item.degree}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {certifications.length > 0 && (
+          <View style={styles.certifications}>
+            <Text style={styles.sectionTitle}>{translations.certifications}</Text>
+            {certifications.map(certification => (
+              <View key={certification.id} style={styles.certificationItem}>
+                <Text>
+                  {certification.name}
+                  {certification.description && `, ${certification.description}`}
+                </Text>
+                <Text style={styles.dateRange}>{certification.date}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {hobbies.length > 0 && (
+          <View style={styles.certifications}>
+            <Text style={styles.sectionTitle}>{translations.hobbies}</Text>
+            <Text>{hobbies}</Text>
+          </View>
+        )}
       </Page>
     </Document>
   )

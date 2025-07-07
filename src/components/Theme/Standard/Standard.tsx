@@ -82,9 +82,10 @@ interface StandardProps {
   languages: Language[]
   education: Education[]
   translations: Translations
+  hobbies: string
 }
 
-const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skills, languages, education, translations }) => {
+const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skills, languages, education, translations, hobbies }) => {
   return (
     <Document>
       <Page style={styles.page}>
@@ -217,6 +218,13 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
                 <Text style={styles.date}>{item.date}</Text>
               </View>
             ))}
+          </View>
+        )}
+
+        {hobbies.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{translations.hobbies}</Text>
+            <Text>{hobbies}</Text>
           </View>
         )}
       </Page>
