@@ -1,10 +1,10 @@
 import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
-import Input from '../ui/Input/Input'
-import TextArea from '../ui/TextArea/TextArea'
 import AddButton from '../ui/AddButton/AddButton'
 import DeleteButton from '../ui/DeleteButton/DeleteButton'
+import Input from '../ui/Input/Input'
+import TextArea from '../ui/TextArea/TextArea'
 
 export default function Skills() {
   const intl = useIntl()

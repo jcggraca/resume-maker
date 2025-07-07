@@ -16,7 +16,9 @@ export default function Footer() {
         João Graça
       </a>
       {' '}
-      — If you liked this app, consider giving it a star on {' '}
+      — If you liked this app, consider giving it a star on
+      {' '}
+      {' '}
       <a
         target="_blank"
         rel="noopener noreferrer"

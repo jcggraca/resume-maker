@@ -1,4 +1,4 @@
-import { Moon, Sun, FileUser } from 'lucide-react'
+import { FileUser, Moon, Sun } from 'lucide-react'
 import { useEffect } from 'react'
 import { useIntl } from 'react-intl'
 import { useSettingsStore } from '../../store/useSettingsStore'

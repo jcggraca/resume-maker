@@ -19,7 +19,7 @@ interface PreviewProps {
 export default function Preview({ isOpen, onClose }: PreviewProps) {
   const intl = useIntl()
   const { template } = useSettingsStore()
-  const { personalInfo, certifications, works, skills, languages, education, hobbies, lastUpdated } = useResumeStore()
+  const { personalInfo, certifications, works, skills, languages, education, hobbies, projects, lastUpdated } = useResumeStore()
 
   useEffect(() => {
     registerFonts()
@@ -34,10 +34,11 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
     summary: intl.formatMessage({ id: 'summary' }),
     present: intl.formatMessage({ id: 'present' }),
     hobbies: intl.formatMessage({ id: 'hobbies' }),
+    projects: intl.formatMessage({ id: 'projects' }),
   }), [intl])
 
   const memoizedTemplate = useMemo(() => {
-    const props = { personalInfo, certifications, works, skills, languages, education, hobbies }
+    const props = { personalInfo, certifications, works, skills, languages, education, hobbies, projects }
 
     switch (template) {
       case 'Standard':
@@ -56,8 +57,9 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
     skills,
     languages,
     education,
+    projects,
+    hobbies,
     lastUpdated,
-    hobbies
   ])
 
   const handleDownload = useCallback(async () => {
@@ -66,7 +68,7 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `resume-${personalInfo?.name}.pdf`
+      link.download = `resume-${personalInfo?.name ?? 'user'}.pdf`
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
@@ -75,7 +77,7 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
     catch (error) {
       console.error('Error generating PDF:', error)
     }
-  }, [memoizedTemplate])
+  }, [memoizedTemplate, personalInfo?.name])
 
   return (
     <Modal

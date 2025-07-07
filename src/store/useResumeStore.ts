@@ -313,18 +313,18 @@ export const useResumeStore = create(
         lastUpdated: getTime,
         works: state.works.map(item => (item.id === id
           ? {
-            ...item,
-            points: [
-              ...item.points,
-              {
-                id: crypto.randomUUID(),
-                order: item.points.length > 0
-                  ? Math.max(...item.points.map(p => p.order)) + 1
-                  : 0,
-                description: '',
-              },
-            ],
-          }
+              ...item,
+              points: [
+                ...item.points,
+                {
+                  id: crypto.randomUUID(),
+                  order: item.points.length > 0
+                    ? Math.max(...item.points.map(p => p.order)) + 1
+                    : 0,
+                  description: '',
+                },
+              ],
+            }
           : item)),
       })),
       updateWorkPoint: (workID, pointID, order, description) =>
@@ -376,14 +376,14 @@ export const useResumeStore = create(
           works: state.works.map(work =>
             work.id === workID
               ? {
-                ...work,
-                points: work.points
-                  .filter(point => point.id !== pointID)
-                  .map((point, index) => ({
-                    ...point,
-                    order: index,
-                  })),
-              }
+                  ...work,
+                  points: work.points
+                    .filter(point => point.id !== pointID)
+                    .map((point, index) => ({
+                      ...point,
+                      order: index,
+                    })),
+                }
               : work,
           ),
         })),

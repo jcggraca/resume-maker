@@ -9,7 +9,7 @@ interface LazyComponentProps {
 
 const LazyComponent = lazy(() => import('./Preview')) as React.LazyExoticComponent<
   React.ComponentType<LazyComponentProps>
->;
+>
 
 export default function PreviewButton() {
   const intl = useIntl()

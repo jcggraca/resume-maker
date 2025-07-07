@@ -1,9 +1,9 @@
 import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
-import Input from '../ui/Input/Input'
 import AddButton from '../ui/AddButton/AddButton'
 import DeleteButton from '../ui/DeleteButton/DeleteButton'
+import Input from '../ui/Input/Input'
 
 export default function Languages() {
   const intl = useIntl()

@@ -1,11 +1,11 @@
-import { useIntl } from "react-intl";
-import Button from "../Button/Button";
-import { FC } from "react";
-import { Trash2 } from "lucide-react";
+import type { FC } from 'react'
+import { Trash2 } from 'lucide-react'
+import { useIntl } from 'react-intl'
+import Button from '../Button/Button'
 
 interface DeleteButtonProps {
-  textId: string;
-  onClick: () => void;
+  textId: string
+  onClick: () => void
 }
 
 const DeleteButton: FC<DeleteButtonProps> = ({ textId, onClick }) => {
@@ -18,7 +18,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({ textId, onClick }) => {
       {' '}
       {intl.formatMessage({ id: textId })}
     </Button>
-  );
+  )
 }
 
-export default DeleteButton;
+export default DeleteButton

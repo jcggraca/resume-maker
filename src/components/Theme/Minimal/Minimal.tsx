@@ -1,6 +1,5 @@
 import type { FC } from 'react'
-import type { Certification, Education, Language, PersonalInfo, Skill, Work } from '../../../store/useResumeStore'
-import type { Translations } from '../../../utils/types'
+import type { TemplatesProps } from '../../../utils/types'
 import {
   Document,
   Link,
@@ -122,18 +121,7 @@ const styles = StyleSheet.create({
   },
 })
 
-interface MinimalProps {
-  personalInfo: PersonalInfo
-  certifications: Certification[]
-  works: Work[]
-  skills: Skill[]
-  languages: Language[]
-  education: Education[]
-  translations: Translations
-  hobbies: string
-}
-
-const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills, languages, education, translations, hobbies }) => {
+const Minimal: FC<TemplatesProps> = ({ personalInfo, certifications, works, skills, languages, education, translations, hobbies, projects }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -244,6 +232,21 @@ const Minimal: FC<MinimalProps> = ({ personalInfo, certifications, works, skills
                   {certification.description && `, ${certification.description}`}
                 </Text>
                 <Text style={styles.dateRange}>{certification.date}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {projects.length > 0 && (
+          <View style={styles.certifications}>
+            <Text style={styles.sectionTitle}>{translations.projects}</Text>
+            {projects.map(project => (
+              <View key={project.id}>
+                <View style={styles.certificationItem}>
+                  <Text>{project.name}</Text>
+                  {project.link && <Link href={project.link}>{cleanUrl(project.link)}</Link>}
+                </View>
+                {project.description && <Text>{project.description}</Text>}
               </View>
             ))}
           </View>

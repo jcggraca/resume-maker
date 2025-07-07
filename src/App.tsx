@@ -1,10 +1,11 @@
-import { FC, lazy, ReactNode, Suspense } from 'react'
+import type { FC, ReactNode } from 'react'
+import { lazy, Suspense } from 'react'
+import BackToTop from './components/BackToTop/BackToTop'
 import Customization from './components/Customization/Customization'
+import Footer from './components/Footer/Footer'
 import Header from './components/Header/Header'
 import Nav from './components/Nav/Nav'
 import PersonalInfo from './components/PersonalInfo/PersonalInfo'
-import BackToTop from './components/BackToTop/BackToTop'
-import Footer from './components/Footer/Footer'
 
 const WorkExperience = lazy(() => import('./components/WorkExperience/WorkExperience'))
 const Education = lazy(() => import('./components/Education/Education'))

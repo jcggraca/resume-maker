@@ -2,13 +2,13 @@ import { ArrowDown, ArrowUp, Trash2 } from 'lucide-react'
 import { useIntl } from 'react-intl'
 import { useResumeStore } from '../../store/useResumeStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
+import AddButton from '../ui/AddButton/AddButton'
 import Button from '../ui/Button/Button'
 import CheckBox from '../ui/CheckBox/CheckBox'
+import DeleteButton from '../ui/DeleteButton/DeleteButton'
 import Input from '../ui/Input/Input'
 import TextArea from '../ui/TextArea/TextArea'
 import styles from './WorkExperience.module.css'
-import AddButton from '../ui/AddButton/AddButton'
-import DeleteButton from '../ui/DeleteButton/DeleteButton'
 
 export default function WorkExperience() {
   const intl = useIntl()

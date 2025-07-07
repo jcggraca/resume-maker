@@ -1,6 +1,5 @@
 import type { FC } from 'react'
-import type { Certification, Education, Language, PersonalInfo, Skill, Work } from '../../../store/useResumeStore'
-import type { Translations } from '../../../utils/types'
+import type { TemplatesProps } from '../../../utils/types'
 import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 import { useSettingsStore } from '../../../store/useSettingsStore'
 import { cleanUrl } from '../../../utils/form'
@@ -74,18 +73,7 @@ const styles = StyleSheet.create({
   },
 })
 
-interface StandardProps {
-  personalInfo: PersonalInfo
-  certifications: Certification[]
-  works: Work[]
-  skills: Skill[]
-  languages: Language[]
-  education: Education[]
-  translations: Translations
-  hobbies: string
-}
-
-const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skills, languages, education, translations, hobbies }) => {
+const Standard: FC<TemplatesProps> = ({ personalInfo, certifications, works, skills, languages, education, translations, hobbies, projects }) => {
   return (
     <Document>
       <Page style={styles.page}>
@@ -216,6 +204,21 @@ const Standard: FC<StandardProps> = ({ personalInfo, certifications, works, skil
                   )}
                 </View>
                 <Text style={styles.date}>{item.date}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        {projects.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{translations.projects}</Text>
+            {projects.map(project => (
+              <View key={project.id}>
+                <View style={styles.itemHeader}>
+                  <Text>{project.name}</Text>
+                  {project.link && <Link href={project.link}>{cleanUrl(project.link)}</Link>}
+                </View>
+                {project.description && <Text>{project.description}</Text>}
               </View>
             ))}
           </View>

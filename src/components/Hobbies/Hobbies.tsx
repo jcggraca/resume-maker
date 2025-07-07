@@ -17,7 +17,7 @@ export default function Hobbies() {
           <li>{intl.formatMessage({ id: 'makeMemorable' })}</li>
           <li>{intl.formatMessage({ id: 'earlyCareer' })}</li>
         </ul>
-        
+
         <p>{intl.formatMessage({ id: 'avoidGeneric' })}</p>
 
         <TextArea
