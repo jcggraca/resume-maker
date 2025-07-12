@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp, Trash2 } from 'lucide-react'
-import { useIntl } from 'react-intl'
-import { useResumeStore } from '../../store/useResumeStore'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
+import { useWorkActions, useWorks } from '../../store/workStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
 import AddButton from '../ui/AddButton/AddButton'
 import Button from '../ui/Button/Button'
@@ -11,12 +12,13 @@ import TextArea from '../ui/TextArea/TextArea'
 import styles from './WorkExperience.module.css'
 
 export default function WorkExperience() {
-  const intl = useIntl()
-  const { works, addWork, updateWork, addWorkPoint, updateWorkPoint, removeWorkPoint, removeWork } = useResumeStore()
+  const t = useFormatMessage()
+  const works = useWorks()
+  const { addWork, updateWork, removeWork, addWorkPoint, updateWorkPoint, removeWorkPoint } = useWorkActions()
 
   return (
     <section id="work" className="section">
-      <h2>{intl.formatMessage({ id: 'workExperience' })}</h2>
+      <h2>{t(messages.workExperience)}</h2>
 
       {works.map(work => (
         <div className="card" key={work.id}>
@@ -24,21 +26,21 @@ export default function WorkExperience() {
             <Input
               onChange={e => updateWork({ id: work.id, company: e.target.value })}
               name={`company-${work.id}`}
-              label={intl.formatMessage({ id: 'companyName' })}
+              label={t(messages.companyName)}
               placeholder="Google"
               value={work.company}
             />
             <Input
               onChange={e => updateWork({ id: work.id, role: e.target.value })}
               name={`roleTitle-${work.id}`}
-              label={intl.formatMessage({ id: 'roleTitle' })}
+              label={t(messages.roleTitle)}
               placeholder="Team Lead"
               value={work.role}
             />
             <Input
               onChange={e => updateWork({ id: work.id, startDate: e.target.value })}
               name={`startDate-${work.id}`}
-              label={intl.formatMessage({ id: 'startDate' })}
+              label={t(messages.startDate)}
               placeholder="Jan 2016"
               value={work.startDate}
             />
@@ -46,35 +48,35 @@ export default function WorkExperience() {
               <Input
                 onChange={e => updateWork({ id: work.id, endDate: e.target.value })}
                 name={`endDate-${work.id}`}
-                label={intl.formatMessage({ id: 'endDate' })}
-                placeholder={work.currentlyWorking ? intl.formatMessage({ id: 'present' }) : 'Jun 2019'}
+                label={t(messages.endDate)}
+                placeholder={work.currentlyWorking ? t(messages.present) : 'Jun 2019'}
                 value={work.endDate}
                 disabled={work.currentlyWorking}
               />
               <CheckBox
                 checked={work.currentlyWorking}
                 onChange={e => updateWork({ id: work.id, currentlyWorking: e.target.checked })}
-                label={intl.formatMessage({ id: 'currentlyWorkHere' })}
+                label={t(messages.currentlyWorkHere)}
               />
             </div>
 
             <Input
               onChange={e => updateWork({ id: work.id, location: e.target.value })}
               name={`location-${work.id}`}
-              label={intl.formatMessage({ id: 'location' })}
+              label={t(messages.location)}
               placeholder="Lisbon, Portugal"
               value={work.location}
             />
           </div>
 
-          <p className={styles.label}>{intl.formatMessage({ id: 'bulletPoints' })}</p>
+          <p className={styles.label}>{t(messages.bulletPoints)}</p>
 
           {work.points
             .sort((a, b) => a.order - b.order)
             .map(point => (
               <div className={`flexArea ${styles.point}`} key={point.id}>
                 <TextArea
-                  label={intl.formatMessage({ id: 'workExperiencePoint' })}
+                  label={t(messages.workExperiencePoint)}
                   hideLabel
                   name={`work-point-description-${point.id}`}
                   value={point.description}
@@ -84,7 +86,7 @@ export default function WorkExperience() {
                   variant="borderless"
                   onClick={() => updateWorkPoint(work.id, point.id, point.order - 1)}
                   disabled={point.order === 0}
-                  aria-label={intl.formatMessage({ id: 'moveItemUp' })}
+                  aria-label={t(messages.moveItemUp)}
                   onlyIcon
                 >
                   <ArrowUp size={16} />
@@ -93,16 +95,16 @@ export default function WorkExperience() {
                   variant="borderless"
                   onClick={() => updateWorkPoint(work.id, point.id, point.order + 1)}
                   disabled={point.order === work.points.length - 1}
-                  aria-label={intl.formatMessage({ id: 'moveItemDown' })}
+                  aria-label={t(messages.moveItemDown)}
                   onlyIcon
                 >
                   <ArrowDown size={16} />
                 </Button>
                 <Button
                   aria-label={`
-                    ${intl.formatMessage({ id: 'delete' })}
+                    ${t(messages.delete)}
                     ${' '}
-                    ${intl.formatMessage({ id: 'workExperiencePoint' })}  
+                    ${t(messages.workExperiencePoint)}  
                   `}
                   variant="borderless"
                   onClick={() => removeWorkPoint(work.id, point.id)}
@@ -114,9 +116,9 @@ export default function WorkExperience() {
             ))}
 
           <Button onClick={() => addWorkPoint(work.id)}>
-            {intl.formatMessage({ id: 'add' })}
+            {t(messages.add)}
             {' '}
-            {intl.formatMessage({ id: 'bulletPoints' })}
+            {t(messages.bulletPoints)}
           </Button>
 
           <div className="flexBetween">

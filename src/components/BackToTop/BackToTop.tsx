@@ -1,11 +1,13 @@
 import { ArrowUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useIntl } from 'react-intl'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
 import Button from '../ui/Button/Button'
 import styles from './BackToTop.module.css'
 
 function BackToTop() {
-  const intl = useIntl()
+  const t = useFormatMessage()
+
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -31,7 +33,7 @@ function BackToTop() {
           onClick={scrollToTop}
           className={styles.button}
           variant="borderless"
-          aria-label={intl.formatMessage({ id: 'backToTop' })}
+          aria-label={t(messages.backToTop)}
         >
           <ArrowUp className={styles.icon} />
         </Button>

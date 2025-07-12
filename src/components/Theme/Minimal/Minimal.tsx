@@ -8,10 +8,10 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer'
-import { useSettingsStore } from '../../../store/useSettingsStore'
+import { useCustomizationStore } from '../../../store/customizationStore'
 import { cleanUrl } from '../../../utils/form'
 
-const font = useSettingsStore.getState().font
+const font = useCustomizationStore.getState().font
 
 const styles = StyleSheet.create({
   page: {

@@ -1,7 +1,8 @@
 import type { FC } from 'react'
-import type { Certification, Education, Language, Skill, Work, WorkPoint } from '../../store/useResumeStore'
+import type { Certification, Education, Language, Skill, Work, WorkPoint } from '../../utils/types'
 import { ArrowDown, ArrowUp } from 'lucide-react'
-import { useIntl } from 'react-intl'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
 import Button from '../ui/Button/Button'
 
 interface OrderButtonsProps {
@@ -11,7 +12,7 @@ interface OrderButtonsProps {
 }
 
 const OrderButtons: FC<OrderButtonsProps> = ({ item, list, onClick }) => {
-  const intl = useIntl()
+  const t = useFormatMessage()
 
   return (
     <div>
@@ -19,7 +20,7 @@ const OrderButtons: FC<OrderButtonsProps> = ({ item, list, onClick }) => {
         variant="borderless"
         disabled={item.order === 0}
         onClick={() => onClick({ id: item.id, order: item.order - 1 })}
-        aria-label={intl.formatMessage({ id: 'moveItemUp' })}
+        aria-label={t(messages.moveItemUp)}
         onlyIcon
       >
         <ArrowUp size={16} />
@@ -28,7 +29,7 @@ const OrderButtons: FC<OrderButtonsProps> = ({ item, list, onClick }) => {
         variant="borderless"
         disabled={item.order === list.length - 1}
         onClick={() => onClick({ id: item.id, order: item.order + 1 })}
-        aria-label={intl.formatMessage({ id: 'moveItemDown' })}
+        aria-label={t(messages.moveItemDown)}
         onlyIcon
       >
         <ArrowDown size={16} />

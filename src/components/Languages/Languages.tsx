@@ -1,17 +1,20 @@
-import { useIntl } from 'react-intl'
-import { useResumeStore } from '../../store/useResumeStore'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
+import { useLanguageActions, useLanguages } from '../../store/languageStore'
 import OrderButtons from '../OrderButtons/OrderButtons'
 import AddButton from '../ui/AddButton/AddButton'
 import DeleteButton from '../ui/DeleteButton/DeleteButton'
 import Input from '../ui/Input/Input'
 
 export default function Languages() {
-  const intl = useIntl()
-  const { languages, addLanguage, updateLanguage, removeLanguage } = useResumeStore()
+  const t = useFormatMessage()
+
+  const languages = useLanguages()
+  const { addLanguage, updateLanguage, removeLanguage } = useLanguageActions()
 
   return (
     <section id="languages" className="section">
-      <h2>{intl.formatMessage({ id: 'languages' })}</h2>
+      <h2>{t(messages.languages)}</h2>
 
       {languages
         .sort((a, b) => a.order - b.order)
@@ -19,14 +22,14 @@ export default function Languages() {
           <div className="card" key={language.id}>
             <div className="flexForm">
               <Input
-                label={intl.formatMessage({ id: 'name' })}
+                label={t(messages.name)}
                 name={`language-name-${language.id}`}
-                placeholder={intl.formatMessage({ id: 'portuguese' })}
+                placeholder={t(messages.portuguese)}
                 value={language.name}
                 onChange={e => updateLanguage({ id: language.id, name: e.target.value })}
               />
               <Input
-                label={intl.formatMessage({ id: 'level' })}
+                label={t(messages.level)}
                 name={`language-description-${language.id}`}
                 placeholder="B1"
                 value={language.level}

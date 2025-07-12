@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 import type { TemplatesProps } from '../../../utils/types'
 import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
-import { useSettingsStore } from '../../../store/useSettingsStore'
+import { useCustomizationStore } from '../../../store/customizationStore'
 import { cleanUrl } from '../../../utils/form'
 import List, { Item } from './List'
 
-const font = useSettingsStore.getState().font
+const font = useCustomizationStore.getState().font
 
 const styles = StyleSheet.create({
   page: {

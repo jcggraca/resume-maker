@@ -1,31 +1,34 @@
-import { useIntl } from 'react-intl'
-import { useResumeStore } from '../../store/useResumeStore'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
+import { useHobbies, useHobbyActions } from '../../store/hobbyStore'
 import TextArea from '../ui/TextArea/TextArea'
 
 export default function Hobbies() {
-  const intl = useIntl()
-  const { hobbies, updateHobbies } = useResumeStore()
+  const t = useFormatMessage()
+
+  const hobbies = useHobbies()
+  const { updateHobbies } = useHobbyActions()
 
   return (
     <section id="hobbies">
-      <h2>{intl.formatMessage({ id: 'hobbies' })}</h2>
+      <h2>{t(messages.hobbies)}</h2>
 
       <div className="card">
-        <h4>{intl.formatMessage({ id: 'putOnly' })}</h4>
+        <h4>{t(messages.putOnly)}</h4>
         <ul>
-          <li>{intl.formatMessage({ id: 'demonstrateSkills' })}</li>
-          <li>{intl.formatMessage({ id: 'makeMemorable' })}</li>
-          <li>{intl.formatMessage({ id: 'earlyCareer' })}</li>
+          <li>{t(messages.demonstrateSkills)}</li>
+          <li>{t(messages.makeMemorable)}</li>
+          <li>{t(messages.earlyCareer)}</li>
         </ul>
 
-        <p>{intl.formatMessage({ id: 'avoidGeneric' })}</p>
+        <p>{t(messages.avoidGeneric)}</p>
 
         <TextArea
           value={hobbies}
           onChange={e => updateHobbies(e.target.value)}
           name="hobbies"
           placeholder="Self-hosting, 3D printing, Open-source contributions, Hackathons, ..."
-          label={intl.formatMessage({ id: 'hobbies' })}
+          label={t(messages.hobbies)}
           rows={5}
         />
       </div>

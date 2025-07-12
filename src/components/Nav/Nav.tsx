@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useIntl } from 'react-intl'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
 import styles from './Nav.module.css'
 
 interface Link {
@@ -19,7 +20,8 @@ const links: Link[] = [
 ]
 
 export default function Nav() {
-  const intl = useIntl()
+  const t = useFormatMessage()
+
   const [activeLink, setActiveLink] = useState<string>('')
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function Nav() {
               className={`${styles.link} ${activeLink === link.url ? styles.isActive : ''}`}
               href={link.url}
             >
-              {intl.formatMessage({ id: link.label })}
+              {t(messages[link.label as keyof typeof messages])}
             </a>
           </li>
         ))}

@@ -1,4 +1,5 @@
 import type { FC, TextareaHTMLAttributes } from 'react'
+import { memo } from 'react'
 import styles from './TextArea.module.css'
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -8,7 +9,15 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   hideLabel?: boolean
 }
 
-const TextArea: FC<TextAreaProps> = ({ name, label, value, onChange, error, hideLabel, ...rest }) => {
+const TextAreaComponent: FC<TextAreaProps> = ({
+  name,
+  label,
+  value,
+  onChange,
+  error,
+  hideLabel,
+  ...rest
+}) => {
   return (
     <div className={styles.root}>
       {label && (
@@ -19,7 +28,7 @@ const TextArea: FC<TextAreaProps> = ({ name, label, value, onChange, error, hide
       <textarea
         id={name}
         name={name}
-        value={value}
+        value={value ?? ''}
         onChange={onChange}
         className={styles.textArea}
         {...rest}
@@ -29,4 +38,5 @@ const TextArea: FC<TextAreaProps> = ({ name, label, value, onChange, error, hide
   )
 }
 
+const TextArea = memo(TextAreaComponent)
 export default TextArea

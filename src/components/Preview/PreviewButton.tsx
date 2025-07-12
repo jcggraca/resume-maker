@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useState } from 'react'
-import { useIntl } from 'react-intl'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
 import Button from '../ui/Button/Button'
 
 interface LazyComponentProps {
@@ -12,7 +13,8 @@ const LazyComponent = lazy(() => import('./Preview')) as React.LazyExoticCompone
 >
 
 export default function PreviewButton() {
-  const intl = useIntl()
+  const t = useFormatMessage()
+
   const [displayResume, setDisplayResume] = useState(false)
 
   const closePreviewModal = useCallback(() => {
@@ -26,7 +28,7 @@ export default function PreviewButton() {
   return (
     <section id="preview">
       <Button variant="secondary" onClick={openPreviewModal}>
-        {intl.formatMessage({ id: 'previewResume' })}
+        {t(messages.previewResume)}
       </Button>
 
       {displayResume && (

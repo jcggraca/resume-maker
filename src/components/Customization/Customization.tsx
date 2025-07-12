@@ -1,91 +1,22 @@
-import { useIntl } from 'react-intl'
-import { useSettingsStore } from '../../store/useSettingsStore'
-import Button from '../ui/Button/Button'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
 import styles from './Customization.module.css'
+import Font from './Font'
+import Template from './Template'
 
 export default function Customization() {
-  const intl = useIntl()
-  const { font, template, setFont, setTemplate } = useSettingsStore()
-
-  const templatesList = [
-    {
-      name: 'Standard',
-      image: null,
-    },
-    {
-      name: 'Minimal',
-      image: null,
-    },
-    // {
-    //   name: 'Luke',
-    //   image: null,
-    // },
-  ]
-
-  const fontsList = [
-    {
-      name: 'Roboto',
-      image: null,
-    },
-    {
-      name: 'Inter',
-      image: null,
-    },
-    {
-      name: 'PT Serif',
-      image: null,
-    },
-    {
-      name: 'Arimo',
-      image: null,
-    },
-  ]
+  const t = useFormatMessage()
 
   return (
     <section className="section" id="customization">
-      <h2>{intl.formatMessage({ id: 'customization' })}</h2>
+      <h2>{t(messages.customization)}</h2>
 
       <div className="card">
-        <h3 className={styles.title}>{intl.formatMessage({ id: 'template' })}</h3>
-        <div className={styles.list}>
-          {templatesList.map(item => (
-            <Button
-              key={item.name}
-              onClick={() => setTemplate(item.name)}
-              className={`
-              ${styles.card}
-              ${template === item.name && styles.activeCard}
-            `}
-            >
-              {item.name}
-            </Button>
-          ))}
-        </div>
+        <h3 className={styles.title}>{t(messages.template)}</h3>
+        <Template />
 
-        <h3>{intl.formatMessage({ id: 'fonts' })}</h3>
-        <div className={styles.list}>
-          {fontsList.map(item => (
-            <Button
-              key={item.name}
-              onClick={() => setFont(item.name)}
-              className={`
-                ${styles.card}
-                ${font === item.name && styles.activeCard}
-              `}
-              style={{
-                fontFamily: item.name,
-              }}
-            >
-              <div style={{
-                fontSize: '18px',
-              }}
-              >
-                Aa
-              </div>
-              {item.name}
-            </Button>
-          ))}
-        </div>
+        <h3>{t(messages.fonts)}</h3>
+        <Font />
       </div>
     </section>
   )

@@ -1,9 +1,17 @@
 import { pdf, PDFViewer } from '@react-pdf/renderer'
 import { useCallback, useEffect, useMemo } from 'react'
-import { useIntl } from 'react-intl'
 import ErrorBoundary from '../../ErrorBoundary'
-import { useResumeStore } from '../../store/useResumeStore'
-import { useSettingsStore } from '../../store/useSettingsStore'
+import messages from '../../i18n/messages'
+import { useFormatMessage } from '../../i18n/useFormatMessage'
+import { useCertifications } from '../../store/certificationStore'
+import { useTemplate } from '../../store/customizationStore'
+import { useEducation } from '../../store/educationStore'
+import { useHobbies } from '../../store/hobbyStore'
+import { useLanguages } from '../../store/languageStore'
+import { usePersonal } from '../../store/personalStore'
+import { useProjects } from '../../store/projectStore'
+import { useSkills } from '../../store/skillStore'
+import { useWorks } from '../../store/workStore'
 import { registerFonts } from '../../utils/registerFonts'
 import Modal from '../Modal/Modal'
 import Minimal from '../Theme/Minimal/Minimal'
@@ -17,36 +25,43 @@ interface PreviewProps {
 };
 
 export default function Preview({ isOpen, onClose }: PreviewProps) {
-  const intl = useIntl()
-  const { template } = useSettingsStore()
-  const { personalInfo, certifications, works, skills, languages, education, hobbies, projects, lastUpdated } = useResumeStore()
+  const t = useFormatMessage()
+  const template = useTemplate()
+  const personalInfo = usePersonal()
+  const certifications = useCertifications()
+  const works = useWorks()
+  const skills = useSkills()
+  const languages = useLanguages()
+  const education = useEducation()
+  const hobbies = useHobbies()
+  const projects = useProjects()
 
   useEffect(() => {
     registerFonts()
   }, [])
 
   const translations = useMemo(() => ({
-    skills: intl.formatMessage({ id: 'skills' }),
-    experience: intl.formatMessage({ id: 'workExperience' }),
-    languages: intl.formatMessage({ id: 'languages' }),
-    education: intl.formatMessage({ id: 'education' }),
-    certifications: intl.formatMessage({ id: 'certifications' }),
-    summary: intl.formatMessage({ id: 'summary' }),
-    present: intl.formatMessage({ id: 'present' }),
-    hobbies: intl.formatMessage({ id: 'hobbies' }),
-    projects: intl.formatMessage({ id: 'projects' }),
-  }), [intl])
+    skills: t(messages.skills),
+    experience: t(messages.workExperience),
+    languages: t(messages.languages),
+    education: t(messages.education),
+    certifications: t(messages.certifications),
+    summary: t(messages.summary),
+    present: t(messages.present),
+    hobbies: t(messages.hobbies),
+    projects: t(messages.projects),
+  }), [t])
 
   const memoizedTemplate = useMemo(() => {
     const props = { personalInfo, certifications, works, skills, languages, education, hobbies, projects }
 
     switch (template) {
       case 'Standard':
-        return <Standard translations={translations} key={lastUpdated} {...props} />
+        return <Standard translations={translations} {...props} />
       case 'Minimal':
-        return <Minimal translations={translations} key={lastUpdated} {...props} />
+        return <Minimal translations={translations} {...props} />
       default:
-        return <Standard translations={translations} key={lastUpdated} {...props} />
+        return <Standard translations={translations} {...props} />
     }
   }, [
     template,
@@ -59,7 +74,6 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
     education,
     projects,
     hobbies,
-    lastUpdated,
   ])
 
   const handleDownload = useCallback(async () => {
@@ -85,16 +99,16 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
       onClose={onClose}
     >
       <div className={styles.group}>
-        <Button onClick={onClose}>
-          {intl.formatMessage({ id: 'hideResume' })}
+        <Button className={styles.closeButton} onClick={onClose}>
+          {t(messages.hideResume)}
         </Button>
         <Button variant="secondary" onClick={handleDownload}>
-          {intl.formatMessage({ id: 'downloadPDF' })}
+          {t(messages.downloadPDF)}
         </Button>
       </div>
 
       <ErrorBoundary>
-        <PDFViewer key={lastUpdated} width="100%" height="90%">
+        <PDFViewer width="100%" height="90%">
           {memoizedTemplate}
         </PDFViewer>
       </ErrorBoundary>

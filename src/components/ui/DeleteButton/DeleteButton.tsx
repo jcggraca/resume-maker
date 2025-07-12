@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import { Trash2 } from 'lucide-react'
-import { useIntl } from 'react-intl'
+import messages from '../../../i18n/messages'
+import { useFormatMessage } from '../../../i18n/useFormatMessage'
 import Button from '../Button/Button'
 
 interface DeleteButtonProps {
@@ -9,14 +10,14 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton: FC<DeleteButtonProps> = ({ textId, onClick }) => {
-  const intl = useIntl()
+  const t = useFormatMessage()
 
   return (
     <Button onClick={onClick}>
       <Trash2 size={16} />
-      {intl.formatMessage({ id: 'delete' })}
+      {t(messages.delete)}
       {' '}
-      {intl.formatMessage({ id: textId })}
+      {t(messages[textId as keyof typeof messages])}
     </Button>
   )
 }
