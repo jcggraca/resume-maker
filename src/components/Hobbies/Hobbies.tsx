@@ -14,7 +14,7 @@ export default function Hobbies() {
       <h2>{t(messages.hobbies)}</h2>
 
       <div className="card">
-        <h4>{t(messages.putOnly)}</h4>
+        <b>{t(messages.putOnly)}</b>
         <ul>
           <li>{t(messages.demonstrateSkills)}</li>
           <li>{t(messages.makeMemorable)}</li>
