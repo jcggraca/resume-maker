@@ -3,37 +3,34 @@ import messages from '../../i18n/messages'
 import { useFormatMessage } from '../../i18n/useFormatMessage'
 import Button from '../ui/Button/Button'
 
-interface LazyComponentProps {
-  isOpen: boolean
-  onClose: () => void
-};
-
-const LazyComponent = lazy(() => import('./Preview')) as React.LazyExoticComponent<
-  React.ComponentType<LazyComponentProps>
->
+const loadPreview = () => import('./Preview');
+const LazyPreview = lazy(loadPreview);
 
 export default function PreviewButton() {
   const t = useFormatMessage()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const [displayResume, setDisplayResume] = useState(false)
-
-  const closePreviewModal = useCallback(() => {
-    setDisplayResume(false)
+  const toggleModal = useCallback((state: boolean) => () => {
+    setIsModalOpen(state);
   }, [])
 
-  const openPreviewModal = useCallback(() => {
-    setDisplayResume(true)
-  }, [])
+  const handleMouseEnter = () => {
+    loadPreview()
+  }
 
   return (
     <section id="preview">
-      <Button variant="secondary" onClick={openPreviewModal}>
+      <Button variant="secondary" onClick={toggleModal(true)}
+        onMouseEnter={handleMouseEnter}>
         {t(messages.previewResume)}
       </Button>
 
-      {displayResume && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <LazyComponent isOpen={displayResume} onClose={closePreviewModal} />
+      {isModalOpen && (
+        <Suspense fallback={<div className="loader">Loading...</div>}>
+          <LazyPreview 
+            isOpen={isModalOpen} 
+            onClose={toggleModal(false)} 
+          />
         </Suspense>
       )}
     </section>

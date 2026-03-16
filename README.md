@@ -4,16 +4,34 @@
 
 Create a professional resume quickly and easily with our Resume Maker app. Choose from various templates, personalize your information, and download your resume.
 
-<img alt="screen capture" src="public/images/image1.png" />
+![Resume Maker screenshot](./screenshot.png)
 
-## Future Implementations
+## Getting Started
 
-- [x] **Projects Section**
-- [ ] **Courses Section**
-- [ ] **More Templates**
-- [x] **Better mobile support**
-- [ ] **Additional Language Support**
-- [ ] **Cover Letter**
+Clone the repository:
+
+```
+git clone https://gitlab.com/jcggraca/portfolio.git  
+cd portfolio
+```
+
+Install dependencies:
+
+`npm install`
+
+Run the development server:
+
+`npm run dev`
+
+## Build
+
+Create a production build:
+
+`npm run build`
+
+Preview locally:
+
+`npm run preview`
 
 ## How to Contribute
 
@@ -24,7 +42,6 @@ We welcome contributions! If you have suggestions or improvements, feel free to 
 Have questions or feedback? Feel free to reach out:
 
 - GitHub Issues: [Report an Issue](https://github.com/jcggraca/resume-maker/issues)
-- Email: mail@joaograca.dev
 
 ## License
 

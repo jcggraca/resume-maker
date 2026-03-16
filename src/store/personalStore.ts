@@ -3,29 +3,31 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface usePersonalState extends PersonalInfo {
-  actions: {
-    setPersonalInfo: (data: Partial<PersonalInfo>) => void
-  }
+  setPersonalInfo: (data: Partial<PersonalInfo>) => void
+  resetInfo: () => void
 }
 
-const usePersonalStore = create(
+const initialState: PersonalInfo = {
+  name: '',
+  email: '',
+  linkedin: '',
+  phone: '',
+  github: '',
+  location: '',
+  website: '',
+  jobTitle: '',
+  summary: '',
+}
+
+export const usePersonalStore = create(
   persist<usePersonalState>(
     set => ({
-      name: '',
-      email: '',
-      linkedin: '',
-      phone: '',
-      github: '',
-      location: '',
-      website: '',
-      jobTitle: '',
-      summary: '',
-      actions: {
-        setPersonalInfo: data => set(state => ({
-          ...state,
-          ...data,
-        })),
-      },
+      ...initialState,
+      setPersonalInfo: data => set(state => ({
+        ...state,
+        ...data,
+      })),
+      resetInfo: () => set(initialState),
     }),
     {
       name: 'personal-storage',
@@ -33,8 +35,3 @@ const usePersonalStore = create(
     },
   ),
 )
-
-export const usePersonalField = <K extends keyof PersonalInfo>(key: K) => usePersonalStore(state => state[key])
-export const usePersonal = () => usePersonalStore(state => state)
-
-export const usePersonalActions = () => usePersonalStore(state => state.actions)

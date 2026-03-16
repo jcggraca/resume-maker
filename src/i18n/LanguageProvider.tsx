@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { Locale } from '../utils/types'
-import { useMemo } from 'react'
+import { useEffect } from 'react'
 import { IntlProvider } from 'react-intl'
 import { useLocale } from '../store/settingStore'
 import en from './en.json'
@@ -18,7 +18,7 @@ const messages: Record<Locale, typeof en> = {
 const LanguageProvider: FC<LanguageProviderProps> = ({ children }) => {
   const locale = useLocale()
 
-  useMemo(() => {
+  useEffect(() => {
     document.documentElement.lang = locale
   }, [locale])
 

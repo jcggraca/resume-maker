@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { useEffect } from 'react'
 import styles from './Modal.module.css'
@@ -9,11 +9,10 @@ interface ModalProps {
   children: ReactNode
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export default function Modal({ isOpen, onClose, children }: ModalProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape')
-        onClose()
+      if (event.key === 'Escape') onClose()
     }
 
     if (isOpen) {
@@ -27,16 +26,32 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
     }
   }, [isOpen, onClose])
 
+  if (!isOpen) return null
+
   return (
-    <div className={`${styles.overlay} ${isOpen ? '' : styles.closed}`} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <button type="button" className={styles.closeButton} onClick={onClose}>
-          <X />
+    <div className={styles.overlay}>
+      <button
+        className={styles.backdropButton}
+        onClick={onClose}
+        aria-label="Close modal"
+        type="button"
+      />
+
+      <div
+        className={styles.modal}
+        role="dialog"
+        aria-modal="true"
+      >
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label="Close"
+        >
+          <X size={20} />
         </button>
         {children}
       </div>
     </div>
   )
 }
-
-export default Modal

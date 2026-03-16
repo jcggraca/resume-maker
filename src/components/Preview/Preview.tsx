@@ -1,33 +1,49 @@
-import { pdf, PDFViewer } from '@react-pdf/renderer'
-import { useCallback, useEffect, useMemo } from 'react'
-import ErrorBoundary from '../../ErrorBoundary'
-import messages from '../../i18n/messages'
+import { lazy, Suspense, useCallback, useEffect, useMemo, type JSX } from 'react'
+import styles from './Preview.module.css'
+import Modal from '../Modal/Modal'
+import Button from '../ui/Button/Button'
 import { useFormatMessage } from '../../i18n/useFormatMessage'
-import { useCertifications } from '../../store/certificationStore'
 import { useTemplate } from '../../store/customizationStore'
+import { useCertifications } from '../../store/certificationStore'
+import { useWorks } from '../../store/workStore'
+import { useSkills } from '../../store/skillStore'
+import { useLanguages } from '../../store/languageStore'
 import { useEducation } from '../../store/educationStore'
 import { useHobbies } from '../../store/hobbyStore'
-import { useLanguages } from '../../store/languageStore'
-import { usePersonal } from '../../store/personalStore'
 import { useProjects } from '../../store/projectStore'
-import { useSkills } from '../../store/skillStore'
-import { useWorks } from '../../store/workStore'
 import { registerFonts } from '../../utils/registerFonts'
-import Modal from '../Modal/Modal'
-import Minimal from '../Theme/Minimal/Minimal'
-import Standard from '../Theme/Standard/Standard'
-import Button from '../ui/Button/Button'
-import styles from './Preview.module.css'
+import messages from '../../i18n/messages'
+import { usePersonalStore } from '../../store/personalStore'
+import ErrorBoundary from '../../ErrorBoundary'
+
+const PDFViewer = lazy(() => import('@react-pdf/renderer').then(mod => ({ default: mod.PDFViewer })))
+const Standard = lazy(() => import('../Theme/Standard/Standard'))
+const Minimal = lazy(() => import('../Theme/Minimal/Minimal'))
 
 interface PreviewProps {
   isOpen: boolean
   onClose: () => void
 };
 
+const downloadPdfBlob = async (template: JSX.Element, fileName: string) => {
+  const { pdf } = await import('@react-pdf/renderer');
+
+  const blob = await pdf(template).toBlob();
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
 export default function Preview({ isOpen, onClose }: PreviewProps) {
   const t = useFormatMessage()
   const template = useTemplate()
-  const personalInfo = usePersonal()
+  const personalInfo = usePersonalStore()
   const certifications = useCertifications()
   const works = useWorks()
   const skills = useSkills()
@@ -77,21 +93,17 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
   ])
 
   const handleDownload = useCallback(async () => {
+    const name = personalInfo?.name ?? '';
+    const fileName = name
+      ? `resume-${name.replace(/\s+/g, '-').toLowerCase()}.pdf`
+      : 'resume.pdf';
+
     try {
-      const blob = await pdf(memoizedTemplate).toBlob()
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `resume-${personalInfo?.name ?? 'user'}.pdf`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
+      await downloadPdfBlob(memoizedTemplate, fileName);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
     }
-    catch (error) {
-      console.error('Error generating PDF:', error)
-    }
-  }, [memoizedTemplate, personalInfo?.name])
+  }, [memoizedTemplate, personalInfo?.name]);
 
   return (
     <Modal
@@ -99,7 +111,7 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
       onClose={onClose}
     >
       <div className={styles.group}>
-        <Button className={styles.closeButton} onClick={onClose}>
+        <Button onClick={onClose}>
           {t(messages.hideResume)}
         </Button>
         <Button variant="secondary" onClick={handleDownload}>
@@ -108,9 +120,11 @@ export default function Preview({ isOpen, onClose }: PreviewProps) {
       </div>
 
       <ErrorBoundary>
-        <PDFViewer width="100%" height="90%">
-          {memoizedTemplate}
-        </PDFViewer>
+        <Suspense fallback={<div>Loading PDF...</div>}>
+          <PDFViewer width="100%" height="90%">
+            {memoizedTemplate}
+          </PDFViewer>
+        </Suspense>
       </ErrorBoundary>
     </Modal>
   )

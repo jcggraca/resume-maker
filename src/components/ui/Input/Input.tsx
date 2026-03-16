@@ -1,5 +1,4 @@
-import type { FC, InputHTMLAttributes, Ref } from 'react'
-import { memo } from 'react'
+import type { InputHTMLAttributes, Ref } from 'react'
 import styles from './Input.module.css'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -9,7 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>
 }
 
-const InputComponent: FC<InputProps> = ({ name, label, value, onChange, error, ref, ...rest }) => {
+export default function Input({ name, label, value, onChange, error, ref, ...rest }: InputProps) {
   return (
     <div className={styles.root}>
       <label htmlFor={name} className={styles.label}>
@@ -28,6 +27,3 @@ const InputComponent: FC<InputProps> = ({ name, label, value, onChange, error, r
     </div>
   )
 }
-
-const Input = memo(InputComponent)
-export default Input

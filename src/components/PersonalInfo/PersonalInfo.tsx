@@ -1,7 +1,7 @@
 import messages from '../../i18n/messages'
 import { useFormatMessage } from '../../i18n/useFormatMessage'
-import { PersonalField } from './PersonalField'
-import { SummaryField } from './SummaryField'
+import PersonalField from './PersonalField'
+import SummaryField from './SummaryField'
 
 export default function PersonalInfo() {
   const t = useFormatMessage()

@@ -4,18 +4,15 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface useSkillState {
   skills: Skill[]
-  actions: {
     addSkill: () => void
     updateSkill: (data: Partial<Skill> & { id: string }) => void
     removeSkill: (id: string) => void
-  }
 }
 
 const useSkillStore = create(
   persist<useSkillState>(
     set => ({
       skills: [],
-      actions: {
         addSkill: () => set(state => ({
           skills: [
             ...state.skills,
@@ -55,7 +52,6 @@ const useSkillStore = create(
               order: index,
             })),
         })),
-      },
     }),
     {
       name: 'skill-storage',
@@ -66,4 +62,9 @@ const useSkillStore = create(
 
 export const useSkills = () => useSkillStore(state => state.skills)
 
-export const useSkillActions = () => useSkillStore(state => state.actions)
+export const useSkillActions = () => ({
+  addSkill: useSkillStore((state) => state.addSkill),
+  updateSkill: useSkillStore((state) => state.updateSkill),
+  removeSkill: useSkillStore((state) => state.removeSkill),
+})
+

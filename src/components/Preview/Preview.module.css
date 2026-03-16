@@ -3,13 +3,3 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
-
-.closeButton {
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .closeButton {
-    display: none;
-  }
-}

@@ -1,6 +1,5 @@
 import type { PersonalInfo } from '../../utils/types'
-import { useCallback } from 'react'
-import { usePersonalActions, usePersonalField } from '../../store/personalStore'
+import { usePersonalStore } from '../../store/personalStore'
 import Input from '../ui/Input/Input'
 
 interface PersonalFieldProps {
@@ -11,24 +10,24 @@ interface PersonalFieldProps {
   type?: string
 }
 
-export function PersonalField({
+export default function PersonalField({
   field,
   label,
   name,
   placeholder,
   type = 'text',
 }: PersonalFieldProps) {
-  const value = usePersonalField(field)
-  const { setPersonalInfo } = usePersonalActions()
+  const value = usePersonalStore((state) => state[field])
+  const setPersonalInfo = usePersonalStore((state) => state.setPersonalInfo)
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPersonalInfo({ [field]: e.target.value })
-  }, [setPersonalInfo, field])
+  }
 
   return (
     <Input
-      value={value as string}
-      onChange={e => handleChange(e)}
+      value={value}
+      onChange={handleChange}
       name={name}
       label={label}
       type={type}

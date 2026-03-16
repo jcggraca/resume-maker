@@ -4,10 +4,8 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 interface useCustomizationState {
   template: string
   font: string
-  actions: {
-    setTemplate: (template: string) => void
-    setFont: (font: string) => void
-  }
+  setTemplate: (template: string) => void
+  setFont: (font: string) => void
 }
 
 export const useCustomizationStore = create<useCustomizationState>()(
@@ -15,10 +13,8 @@ export const useCustomizationStore = create<useCustomizationState>()(
     set => ({
       template: 'Standard',
       font: 'Roboto',
-      actions: {
-        setTemplate: template => set({ template }),
-        setFont: font => set({ font }),
-      },
+      setTemplate: (template) => set({ template }),
+      setFont: (font) => set({ font }),
     }),
     {
       name: 'customization-storage',
@@ -27,7 +23,10 @@ export const useCustomizationStore = create<useCustomizationState>()(
   ),
 )
 
-export const useTemplate = () => useCustomizationStore(state => state.template)
-export const useFont = () => useCustomizationStore(state => state.font)
+export const useTemplate = () => useCustomizationStore((state) => state.template)
+export const useFont = () => useCustomizationStore((state) => state.font)
 
-export const useCustomizationActions = () => useCustomizationStore(state => state.actions)
+export const useCustomizationActions = () => ({
+  setFont: useCustomizationStore((state) => state.setFont),
+  setTemplate: useCustomizationStore((state) => state.setTemplate),
+})

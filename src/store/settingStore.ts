@@ -5,10 +5,8 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 interface useSettingState {
   theme: Theme
   locale: Locale
-  actions: {
     setTheme: (theme: Theme) => void
     setLocale: (locale: Locale) => void
-  }
 }
 
 const useSettingStore = create<useSettingState>()(
@@ -16,10 +14,8 @@ const useSettingStore = create<useSettingState>()(
     set => ({
       theme: 'light',
       locale: 'en',
-      actions: {
         setTheme: theme => set({ theme }),
         setLocale: locale => set({ locale }),
-      },
     }),
     {
       name: 'settings-storage',
@@ -31,4 +27,7 @@ const useSettingStore = create<useSettingState>()(
 export const useTheme = () => useSettingStore(state => state.theme)
 export const useLocale = () => useSettingStore(state => state.locale)
 
-export const useSettingActions = () => useSettingStore(state => state.actions)
+export const useSettingActions = () => ({
+  setTheme: useSettingStore((state) => state.setTheme),
+  setLocale: useSettingStore((state) => state.setLocale),
+})

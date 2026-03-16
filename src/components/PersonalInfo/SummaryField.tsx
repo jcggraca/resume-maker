@@ -1,6 +1,5 @@
-import { useCallback } from 'react'
-import { usePersonalActions, usePersonalField } from '../../store/personalStore'
 import TextArea from '../ui/TextArea/TextArea'
+import { usePersonalStore } from '../../store/personalStore'
 
 interface SummaryFieldProps {
   title: string
@@ -8,17 +7,17 @@ interface SummaryFieldProps {
   placeholder?: string
 }
 
-export function SummaryField({
+export default function SummaryField({
   title,
   label,
   placeholder,
 }: SummaryFieldProps) {
-  const summary = usePersonalField('summary')
-  const { setPersonalInfo } = usePersonalActions()
+  const summary = usePersonalStore((state) => state.summary)
+  const setPersonalInfo = usePersonalStore((state) => state.setPersonalInfo)
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPersonalInfo({ summary: e.target.value })
-  }, [setPersonalInfo])
+  }
 
   return (
     <>
